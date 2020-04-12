@@ -1,0 +1,14 @@
+<div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="16px">
+  <chapichapi-card
+    fxFlex.gt-md="0 1 calc(25% - 16px)"
+    fxFlex.lt-lg="0 1 calc(50% - 16px)"
+    fxFlex.xs="calc(100% - 16px)"
+    *ngFor="let card of cards$ | async"
+    [card]="card"
+    routerLink="{{ itemDetailsLink }}/{{ card.id }}"
+  >
+  </chapichapi-card>
+</div>
+<p *ngIf="(cards$ | async)?.length==0">
+  It's looking lonely in here... try <a routerLink="{{ addItemLink }}">adding a new product</a>
+</p>
