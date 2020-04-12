@@ -31,7 +31,7 @@ jobs:
 
       - name: Install and Deploy
         env:
-          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
           npm install
           npm run deploy:github-pages
