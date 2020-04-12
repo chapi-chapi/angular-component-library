@@ -88,9 +88,7 @@ const mockApi : IMockInterceptorData[] = [
     NotificationsService,
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 4500 } },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ApiErrorInterceptor, multi: true },
-    // { provide: HTTP_INTERCEPTORS, useClass: MockApiInterceptor, multi: true },
-    // { provide: "mockApiData", useValue: mockApi },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
 })
