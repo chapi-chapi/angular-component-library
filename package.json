@@ -16,7 +16,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:ci": "npm run clean && npm run test && npm run build:prod",
-    "deploy:github-pages": "ng build --prod --base-href 'https://chapi-chapi.github.io/angular-component-library/'",
+    "deploy:github-pages": "ng deploy --base-href=/angular-component-library/",
     "start:proxy:mock:server": "concurrently --kill-others \"npm run mock:server\" \"npm run start:proxy\"",
     "package:mock-api": "ng-packagr -p ./src/app/shared/interceptors/mock-api/package.json",
     "package:publish:mock-api": "npm publish ./dist/packages/@chapichapi/mock-api --access public"
@@ -48,6 +48,7 @@
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
+    "angular-cli-ghpages": "^0.6.2",
     "codelyzer": "^5.1.2",
     "concurrently": "^5.1.0",
     "jasmine-core": "~3.5.0",
