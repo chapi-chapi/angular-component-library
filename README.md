@@ -1,11 +1,32 @@
 # angular-component-library
 This project was scaffolded using [chapi-chapi/generator-angular](https://github.com/chapi-chapi/generator-angular)
 
-The frontend single page application for the ChapiChapi app
-
-Run locally with:
+This is a component library for various angular packages.
+The project acts as a runnable application that can also be used to generate individual npm packages.
+To run locally use:
 
 ```npm run start:mock```
+
+# Packaging
+The point of this project is to build out a _normal_ angular application for displaying the components, whilst seperating each logical grouping into its own module/package.
+
+For example,
+`app/shared/interceptors/mock-api`
+Is a normal angular module folder but also includes its own package.json and README.md.
+This can then easily be converted into an npm package via the ng-packagr scripts in the top-level package.json.
+
+Running:
+```npm run package:mock-api```
+Will generate a packaged version of the mock-api module.
+
+Once this is done, running:
+```npm run package:publish:mock-api```
+Will publish the package to the @chapichapi org in npm (assuming you have permissions).
+
+In future I will be looking to make the package/publish process more streamlined without filling up the top-level package.json with tons of scripts.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
 
