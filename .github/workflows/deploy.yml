@@ -30,7 +30,7 @@ jobs:
       - name: Install and Build
         run: |
           npm install
-          npm run build:prod
+          ng build --prod --base-href 'https://chapi-chapi.github.io/angular-component-library/'
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
