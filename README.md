@@ -1,4 +1,6 @@
 # angular-component-library
+[![Build](https://github.com/chapi-chapi/angular-component-library/workflows/Build/badge.svg)](https://github.com/chapi-chapi/angular-component-library/actions?query=workflow%3ABuild)
+
 This project was scaffolded using [chapi-chapi/generator-angular](https://github.com/chapi-chapi/generator-angular)
 
 This is a component library for various angular packages.
