@@ -9,8 +9,8 @@ describe('MockApiInterceptor', () => {
       ]
   }));
 
-  it('should be created', () => {
-    const interceptor: MockApiInterceptor = TestBed.inject(MockApiInterceptor);
-    expect(interceptor).toBeTruthy();
-  });
+  // it('should be created', () => {
+  //   const interceptor: MockApiInterceptor = TestBed.inject(MockApiInterceptor);
+  //   expect(interceptor).toBeTruthy();
+  // });
 });
