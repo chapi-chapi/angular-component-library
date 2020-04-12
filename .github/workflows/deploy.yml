@@ -29,14 +29,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install and Build
+      - name: Install and Deploy
+        env:
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
           npm install
           npm run deploy:github-pages
-
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: dist/angular-component-library # The folder the action should deploy.
