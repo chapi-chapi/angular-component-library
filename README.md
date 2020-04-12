@@ -12,7 +12,7 @@ The point of this project is to build out a _normal_ angular application for dis
 
 For example,
 `app/shared/interceptors/mock-api`
-Is a normal angular module folder but also includes its own package.json and README.md.
+Is a normal angular module folder but also includes its own package.json, public_api.ts and README.md.
 This can then easily be converted into an npm package via the ng-packagr scripts in the top-level package.json.
 
 Running:
