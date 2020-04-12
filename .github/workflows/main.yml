@@ -1,0 +1,22 @@
+name: Publish Site
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 12.14.1
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.14.1
+    - name: Build and Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v2
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BASE_BRANCH: master
+        BRANCH: gh-pages
+        FOLDER: dist/angular-component-library
+        BUILD_SCRIPT: npm install && npm run build:prod
