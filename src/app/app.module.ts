@@ -4,7 +4,7 @@ import { NgModule } from "@angular/core";
 import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AppComponent } from "./app.component";
-import { ProductsComponent } from "./pages/components/components.component";
+import { ComponentsComponent } from "./pages/components/components.component";
 import { RouterModule } from "@angular/router";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -38,12 +38,13 @@ import { environment } from 'src/environments/environment';
 
 const mockApi : IMockInterceptorData[] = [
   {
-    url: "/api/products",
+    url: "/api/components",
     httpVerb: "GET",
     data: [
       {
-        name: "Product A",
-        description: "Some new product",
+        name: "Mock Api",
+        subtitle: "Interceptor",
+        description: "Provides an interceptor for mocking API calls.",
         insertedUtc: new Date(),
         updatedUtc: new Date(),
       },
@@ -54,7 +55,7 @@ const mockApi : IMockInterceptorData[] = [
 @NgModule({
   declarations: [
     AppComponent,
-    ProductsComponent,
+    ComponentsComponent,
     LoaderComponent,
   ],
   imports: [
