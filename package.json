@@ -16,6 +16,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:ci": "npm run clean && npm run test && npm run build:prod",
+    "deploy:github-pages": "ng build --prod --base-href 'https://chapi-chapi.github.io/angular-component-library/'",
     "start:proxy:mock:server": "concurrently --kill-others \"npm run mock:server\" \"npm run start:proxy\"",
     "package:mock-api": "ng-packagr -p ./src/app/shared/interceptors/mock-api/package.json",
     "package:publish:mock-api": "npm publish ./dist/packages/@chapichapi/mock-api --access public"

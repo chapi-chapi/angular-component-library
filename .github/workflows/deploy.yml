@@ -2,7 +2,9 @@ name: Deploy
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+      - feature/deploy-github-workflow
 
 jobs:
   build:
@@ -30,7 +32,7 @@ jobs:
       - name: Install and Build
         run: |
           npm install
-          ng build --prod --base-href 'https://chapi-chapi.github.io/angular-component-library/'
+          npm run deploy:github-pages
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
