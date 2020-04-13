@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -16,12 +16,15 @@ import { finalize } from 'rxjs/operators';
  */
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
-  constructor(public loadingService: LoadingService) { }
+  constructor(public loadingService: LoadingService, @Inject("isActive") private isActive: boolean,) { }
   intercept(request: HttpRequest<any>, handler: HttpHandler): Observable<HttpEvent<any>> {
+    if(this.isActive) {
       this.loadingService.show();
       return handler.handle(request).pipe(
           finalize(() => this.loadingService.hide())
       );
+    }
+    return handler.handle(request);
   }
 
 }

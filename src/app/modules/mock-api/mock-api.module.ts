@@ -20,7 +20,7 @@ export class MockApiModule {
    * @returns ModuleWithProviders
    */
   static forRoot(mockApi: IMockInterceptorData[], environmentFlag: boolean = true, simulatedDelay = 0) : ModuleWithProviders {
-    return environmentFlag ? {
+    return {
       ngModule: MockApiModule,
       providers: [
         {
@@ -29,14 +29,9 @@ export class MockApiModule {
           multi: true
         },
         { provide: "mockApiData", useValue: mockApi },
+        { provide: "isActive", useValue: environmentFlag },
         { provide: "delay", useValue: simulatedDelay }
       ]
-    }
-    :
-    {
-      ngModule: MockApiModule,
-      providers: [
-      ]
-    }
+    };
   }
  }

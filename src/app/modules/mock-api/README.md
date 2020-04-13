@@ -3,8 +3,7 @@ This package provides a module that can be added to your angular module to inter
 
 Simply add the following references:
 ```
-import { MockApiModule } from '@chapichapi/mock-api';
-import { IMockInterceptorData } from '../../node_modules/@chapichapi/mock-api/IMockInterceptorData';
+import { MockApiModule, IMockInterceptorData } from '@chapichapi/ngx.mock-api';
 ```
 
 Create your mock api:
@@ -33,4 +32,10 @@ You can also pass an flag in to enable the interceptor only for certain environm
 
 ```
 MockApiModule.forRoot(mockApi, environment.mock)
+```
+
+You can also simulate an api response delay by passing in a third argument:
+
+```
+MockApiModule.forRoot(mockApi, environment.mock, 2000)
 ```

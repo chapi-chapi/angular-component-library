@@ -12,4 +12,4 @@ export interface IMockInterceptorData {
   data: any;
 }
 
-export type IMockInterceptorHttpVerb = "GET" | "POST";
+export type IMockInterceptorHttpVerb = "GET" | "POST" | "PUT" | "PATCH";

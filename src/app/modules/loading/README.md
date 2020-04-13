@@ -3,7 +3,7 @@ This package provides a module that can be added to your angular module to inter
 
 Simply add the following references:
 ```
-import { LoadingModule } from '@chapichapi/loading';
+import { LoadingModule } from '@chapichapi/ngx.loading';;
 ```
 
 And then in the imports section:

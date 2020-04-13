@@ -24,20 +24,15 @@ export class LoadingModule {
    * @memberof LoadingModule
    */
   static forRoot(includeInterceptor: boolean = true) : ModuleWithProviders {
-    return includeInterceptor ? {
+    return {
       ngModule: LoadingModule,
       providers: [
         {
           provide: HTTP_INTERCEPTORS,
           useClass: LoadingInterceptor,
           multi: true
-        }
-      ]
-    }
-    :
-    {
-      ngModule: LoadingModule,
-      providers: [
+        },
+        { provide: "isActive", useValue: includeInterceptor },
       ]
     };
   }
