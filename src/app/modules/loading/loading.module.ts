@@ -18,8 +18,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   exports: [LoaderComponent]
 })
 export class LoadingModule {
+  /** Optionally sets up an interceptor that automatically shows a loading spinner when the app makes any http calls.
+   * @param boolean [includeInterceptor=true] specify whether to automatically show a loading spinner when the app makes any http calls.
+   * @returns ModuleWithProviders
+   * @memberof LoadingModule
+   */
   static forRoot(includeInterceptor: boolean = true) : ModuleWithProviders {
-    return {
+    return includeInterceptor ? {
       ngModule: LoadingModule,
       providers: [
         {
@@ -27,6 +32,12 @@ export class LoadingModule {
           useClass: LoadingInterceptor,
           multi: true
         }
+      ]
+    }
+    :
+    {
+      ngModule: LoadingModule,
+      providers: [
       ]
     };
   }
