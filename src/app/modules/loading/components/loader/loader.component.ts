@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { LoadingService } from '../services/loading.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
-  selector: 'app-loader',
+  selector: 'chapichapi-loader',
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.scss']
 })

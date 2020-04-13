@@ -26,15 +26,13 @@ import {
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { TimeagoModule } from "ngx-timeago";
 
-import { LoaderComponent } from "./shared/loader/loader.component";
-import { LoadingService } from "./shared/services/loading.service";
-import { LoadingInterceptor } from "./shared/interceptors/loading.interceptor";
 import { ApiErrorInterceptor } from "./shared/interceptors/api-error.interceptor";
 import { NotificationsService } from "./shared/services/notifications.service";
-import { MockApiModule } from "./shared/interceptors/mock-api/mock-api.module";
+import { MockApiModule } from "./modules/mock-api/mock-api.module";
 import { ChapiChapiCardModule } from './modules/card/card.module';
-import { IMockInterceptorData } from './shared/interceptors/mock-api/IMockInterceptorData';
+import { IMockInterceptorData } from './modules/mock-api/models/IMockInterceptorData';
 import { environment } from 'src/environments/environment';
+import { LoadingModule } from './modules/loading/loading.module';
 
 const mockApi : IMockInterceptorData[] = [
   {
@@ -55,8 +53,7 @@ const mockApi : IMockInterceptorData[] = [
 @NgModule({
   declarations: [
     AppComponent,
-    ComponentsComponent,
-    LoaderComponent,
+    ComponentsComponent
   ],
   imports: [
     BrowserModule,
@@ -79,16 +76,14 @@ const mockApi : IMockInterceptorData[] = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule,
     TimeagoModule.forRoot(),
     ChapiChapiCardModule,
-    MockApiModule.forRoot(mockApi, environment.mock)
+    LoadingModule.forRoot(),
+    MockApiModule.forRoot(mockApi, environment.mock, 3000)
   ],
   providers: [
-    LoadingService,
     NotificationsService,
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 4500 } },
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ApiErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
