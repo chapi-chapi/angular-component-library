@@ -4,8 +4,8 @@
   background: #228899;
   #app-title {
     font-size: 23px;
-    letter-spacing: 4px;
-    position: relative;
+    letter-spacing: 2px;
+    font-weight: 100;
     margin-right: $default-spacing;
   }
 
@@ -15,6 +15,7 @@
       color: #fff;
       text-decoration: none;
       position: relative;
+      font-weight: 100;
 
       &:before {
         content: '';
@@ -27,6 +28,7 @@
       }
 
       &.active, &:hover{
+        font-weight: normal;
         &:before {
           width: 100%;
         }

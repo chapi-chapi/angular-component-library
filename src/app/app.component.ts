@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public title = 'angular-component-library';
+  public title = 'ACL';
   public sideNavOpen = false;
 
   public toggleSideNav = () => this.sideNavOpen = !this.sideNavOpen;

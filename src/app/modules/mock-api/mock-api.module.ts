@@ -1,8 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MockApiInterceptor } from './mock-api.interceptor';
+import { MockApiInterceptor } from './interceptors/mock-api.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { IMockInterceptorData } from './IMockInterceptorData';
+import { IMockInterceptorData } from './models/IMockInterceptorData';
 
 
 /** Module that provides services for intercepting Api calls and using locally mocked data instead.
@@ -19,7 +19,7 @@ export class MockApiModule {
    * @param boolean environmentFlag A flag that can be used to optionally turn the mock api interceptor on or off based on an environment flag.
    * @returns ModuleWithProviders
    */
-  static forRoot(mockApi: IMockInterceptorData[], environmentFlag: boolean = true) : ModuleWithProviders {
+  static forRoot(mockApi: IMockInterceptorData[], environmentFlag: boolean = true, simulatedDelay = 0) : ModuleWithProviders {
     return {
       ngModule: MockApiModule,
       providers: [
@@ -29,7 +29,8 @@ export class MockApiModule {
           multi: true
         },
         { provide: "mockApiData", useValue: mockApi },
-        { provide: "isActive", useValue: environmentFlag }
+        { provide: "isActive", useValue: environmentFlag },
+        { provide: "delay", useValue: simulatedDelay }
       ]
     }
   }
