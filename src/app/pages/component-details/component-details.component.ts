@@ -27,20 +27,21 @@ export class ComponentDetailsComponent implements OnInit {
   embedIde(directory: string, fileNames: string[]) {
     const requests = fileNames.map(file => this.http.get(`app/${directory}/${file}`, {responseType: 'text'}));
     forkJoin(requests).subscribe((responses: string[]) => {
-      // const files : any = {};
+      const filesObj: any = {};
       for (let index = 0; index < fileNames.length; index++) {
         this.files.push({fileName: fileNames[index], fileContents: responses[index]});
+        filesObj[fileNames[index]] = responses[index];
       }
-      // sdk.embedProject(
-      //   'components-list-ide',
-      //   {
-      //     title: 'Card List',
-      //     description: 'test',
-      //     template: 'angular-cli',
-      //     files
-      //   },
-      //   { height: 500 }
-      // );
+      sdk.embedProject(
+        'components-list-ide',
+        {
+          title: 'Card List',
+          description: 'test',
+          template: 'angular-cli',
+          files: filesObj
+        },
+        { height: 400 }
+      );
     });
   }
 
