@@ -33,6 +33,7 @@ import { ChapiChapiCardModule } from './modules/card/card.module';
 import { IMockInterceptorData } from './modules/mock-api/models/IMockInterceptorData';
 import { environment } from 'src/environments/environment';
 import { LoadingModule } from './modules/loading/loading.module';
+import { ComponentDetailsComponent } from './pages/component-details/component-details.component';
 
 const mockApi : IMockInterceptorData[] = [
   {
@@ -53,7 +54,8 @@ const mockApi : IMockInterceptorData[] = [
 @NgModule({
   declarations: [
     AppComponent,
-    ComponentsComponent
+    ComponentsComponent,
+    ComponentDetailsComponent
   ],
   imports: [
     BrowserModule,

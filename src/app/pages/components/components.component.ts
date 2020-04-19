@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../shared/services/api.service';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { IAclComponent } from '../../shared/models/IAclComponent';
 import { Router } from '@angular/router';
 import { ICard } from '../../modules/card/ICard';
@@ -48,18 +48,21 @@ export class ComponentsComponent implements OnInit {
   }
 
   embedIde() {
-    this.http.get('app/pages/components/components.component.html', {responseType: 'text'}).subscribe((data: any) => {
-      const code = data;
+    const directory = 'modules/card';
+    const fileNames = ['card/card.component.html', 'card/card.component.scss', 'card/card.component.ts'];
+    const requests = fileNames.map(file => this.http.get(`app/${directory}/${file}`, {responseType: 'text'}));
+    forkJoin(requests).subscribe((responses: string[]) => {
+      const files : any = {};
+      for (let index = 0; index < fileNames.length; index++) {
+        files[fileNames[index]] = responses[index];
+      }
       sdk.embedProject(
         'components-list-ide',
         {
           title: 'Card List',
           description: 'test',
           template: 'angular-cli',
-          files: {
-            'components.component.ts': code,
-            'components.component.html': code,
-          },
+          files
         },
         { height: 500 }
       );
