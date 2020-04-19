@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import sdk from '@stackblitz/sdk';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
   selector: 'app-component-details',
@@ -11,15 +13,18 @@ import { HttpClient } from '@angular/common/http';
 export class ComponentDetailsComponent implements OnInit {
 
   files: IFile[] = [];
-  constructor(private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private api: ApiService, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.embedIde();
+    this.route.paramMap.subscribe(paramMap => {
+      const componentName: string = paramMap.get('component');
+      this.api.getComponentDetails(componentName).subscribe((response: any) => {
+        this.embedIde(response.directory, response.fileNames);
+      });
+    });
   }
 
-  embedIde() {
-    const directory = 'modules/card';
-    const fileNames = ['card/card.component.html', 'card/card.component.scss', 'card/card.component.ts'];
+  embedIde(directory: string, fileNames: string[]) {
     const requests = fileNames.map(file => this.http.get(`app/${directory}/${file}`, {responseType: 'text'}));
     forkJoin(requests).subscribe((responses: string[]) => {
       // const files : any = {};

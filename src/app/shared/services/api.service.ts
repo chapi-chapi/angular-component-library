@@ -31,41 +31,18 @@ export class ApiService {
       .get(`${this.apiBaseUrl}components`)
       .pipe(
         map((response: any[]) =>
-          response.map(product => this.formatProduct(product))
+          response.map(component => this.formatProduct(component))
         )
       );
   }
 
-  /** Retrieves the product information for the specified email.
+  /** Retrieves the component details for the specified component name.
    * @param {string} email
-   * @returns {Observable<IAclComponent>}
+   * @returns {Observable<any>}
    * @memberof ApiService
    */
-  public getProduct(email: string): Observable<IAclComponent> {
-    return this.httpClient
-      .get(`${this.apiBaseUrl}products/${email}`)
-      .pipe(map((product: IAclComponent) => this.formatProduct(product)));
-  }
-
-  /** Creates a new product via the API.
-   * @param {IAclComponent} product
-   * @returns {Observable<IAclComponent>} The information for the newly created product.
-   * @memberof ApiService
-   */
-  public addProduct(product: IAclComponent): Observable<IAclComponent> {
-    return this.httpClient
-      .post(`${this.apiBaseUrl}products`, product)
-      .pipe(map((product: IAclComponent) => this.formatProduct(product)));
-  }
-
-  /** Updates the product information via the API
-   * @param {IAclComponent} product
-   * @returns {Observable<IAclComponent>} The information for the newly updated product.
-   * @memberof ApiService
-   */
-  public updateProduct(product: IAclComponent): Observable<IAclComponent> {
-    return this.httpClient
-      .put(`${this.apiBaseUrl}products/${product.id}`, product)
-      .pipe(map((product: IAclComponent) => this.formatProduct(product)));
+  public getComponentDetails(componentName: string): Observable<any> {
+    return (this.httpClient
+      .get(`${this.apiBaseUrl}components/${componentName}`) as Observable<any>);
   }
 }

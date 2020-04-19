@@ -50,6 +50,15 @@ const mockApi : IMockInterceptorData[] = [
       },
     ],
   },
+  {
+    url: "/api/components/card",
+    httpVerb: "GET",
+    data:
+      {
+        directory: 'modules/card',
+        fileNames: ['card/card.component.html', 'card/card.component.scss', 'card/card.component.ts']
+      }
+  }
 ];
 
 @NgModule({
