@@ -7,11 +7,12 @@ const routes: Routes = [
   {
     path: 'components',
     component: ComponentsComponent
-  },
-  { path: '',
-    redirectTo: '/components',
-    pathMatch: 'full'
   }
+  // ,
+  // { path: '',
+  //   redirectTo: '/components',
+  //   pathMatch: 'full'
+  // }
 ];
 
 @NgModule({
