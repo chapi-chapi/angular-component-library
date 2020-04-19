@@ -5,11 +5,17 @@ interface IComponentDetails {
   type: string;
   description: string;
   directory: string;
-  hasComponent?: boolean;
+  componentNames?: string[];
   hasService?: boolean;
   hasInterceptor?: boolean;
   fileNames?: string[];
 }
+
+const getComponentFileNames = (name: string) => [
+  `components/${name}/${name}.component.html`,
+  `components/${name}/${name}.component.scss`,
+  `components/${name}/${name}.component.ts`
+];
 
 const componentsToDisplay : IComponentDetails[] = [
   {
@@ -17,12 +23,9 @@ const componentsToDisplay : IComponentDetails[] = [
     type: 'Interceptor, Service, Component',
     description: 'Provides functionality for displaying loading indicators.',
     directory: 'modules/loading',
-    hasComponent: true,
+    componentNames: ['loader'],
     hasService: true,
-    hasInterceptor: true,
-    fileNames: ['components/loader/loader.component.html', 'components/loader/loader.component.scss', 'components/loader/loader.component.ts',
-    'interceptors/loading.interceptor.ts',
-    'services/loading.service.ts']
+    hasInterceptor: true
   },
   {
     name: 'mock-api',
@@ -54,7 +57,8 @@ export const mockApi : IMockInterceptorData[] = [
         fileNames: ['README.md', `${component.name}.module.ts`,
         ...(component.hasInterceptor ? [`interceptors/${component.name}.interceptor.ts`] : []),
         ...(component.hasService ? [`services/${component.name}.service.ts`] : []),
+        ...(component.componentNames ? component.componentNames.map(name => getComponentFileNames(name)).reduce((acc, i) => acc.concat(i)) : []),
         ...(component.fileNames ? component.fileNames : [])],
       }
   }) as any)
-]
+];
