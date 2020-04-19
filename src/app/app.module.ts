@@ -18,6 +18,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatRippleModule, MatNativeDateModule } from "@angular/material/core";
+import {MatTabsModule} from '@angular/material/tabs';
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import {
   MatSnackBarModule,
@@ -78,6 +79,7 @@ const mockApi : IMockInterceptorData[] = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
+    MatTabsModule,
     TimeagoModule.forRoot(),
     ChapiChapiCardModule,
     LoadingModule.forRoot(),

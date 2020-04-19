@@ -1,6 +1,7 @@
-<p>component-details works!</p>
+<h1>Card Component</h1>
 
-<div *ngFor="let file of files">
-  <h2>{{file.fileName}}</h2>
-  <p>{{file.fileContents}}</p>
-</div>
+<mat-tab-group>
+  <mat-tab *ngFor="let file of files" label="{{file.fileName}}">
+    <pre>{{file.fileContents}}</pre>
+  </mat-tab>
+</mat-tab-group>
