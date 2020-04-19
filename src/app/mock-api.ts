@@ -1,4 +1,4 @@
-import { IMockInterceptorData } from "./modules/mock-api/models/IMockInterceptorData";
+import { IMockInterceptorData } from './modules/mock-api/models/IMockInterceptorData';
 
 interface IComponentDetails {
   name: string;
@@ -38,8 +38,8 @@ const componentsToDisplay : IComponentDetails[] = [
 
 export const mockApi : IMockInterceptorData[] = [
   {
-    url: "/api/components",
-    httpVerb: "GET",
+    url: '/api/components',
+    httpVerb: 'GET',
     data: componentsToDisplay.map(component => ({
         name: component.name,
         subtitle: component.type,
@@ -50,7 +50,7 @@ export const mockApi : IMockInterceptorData[] = [
   },
   ...componentsToDisplay.map(component => ({
     url: `/api/components/${component.name}`,
-    httpVerb: "GET",
+    httpVerb: 'GET',
     data:
       {
         directory: component.directory,
