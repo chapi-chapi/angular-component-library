@@ -5,7 +5,7 @@
     fxFlex.xs="calc(100% - 16px)"
     *ngFor="let card of cards$ | async"
     [card]="card"
-    routerLink="{{ itemDetailsLink }}/{{ card.id }}"
+    routerLink="{{ itemDetailsLink(card) }}"
   >
   </chapichapi-card>
 </div>

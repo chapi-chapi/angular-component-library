@@ -7,6 +7,7 @@ import { ICard } from '../../modules/card/ICard';
 import { map } from 'rxjs/operators';
 import sdk from '@stackblitz/sdk';
 import { HttpClient } from '@angular/common/http';
+import { CardLinkDelegate } from 'src/app/modules/card/card-list/card-list.component';
 
 @Component({
   selector: 'app-components',
@@ -39,33 +40,29 @@ export class ComponentsComponent implements OnInit {
         })
       )
     );
-
-    this.embedIde();
   }
 
-  openUpdatePage(product: IAclComponent) {
-    this.router.navigate(['/update-product', JSON.stringify(product)]);
-  }
+  getDetailsLink : CardLinkDelegate = (card: ICard) => `/component-details/${card.title.toLowerCase()}`;
 
-  embedIde() {
-    const directory = 'modules/card';
-    const fileNames = ['card/card.component.html', 'card/card.component.scss', 'card/card.component.ts'];
-    const requests = fileNames.map(file => this.http.get(`app/${directory}/${file}`, {responseType: 'text'}));
-    forkJoin(requests).subscribe((responses: string[]) => {
-      const files : any = {};
-      for (let index = 0; index < fileNames.length; index++) {
-        files[fileNames[index]] = responses[index];
-      }
-      sdk.embedProject(
-        'components-list-ide',
-        {
-          title: 'Card List',
-          description: 'test',
-          template: 'angular-cli',
-          files
-        },
-        { height: 500 }
-      );
-    });
-  }
+  // embedIde() {
+  //   const directory = 'modules/card';
+  //   const fileNames = ['card/card.component.html', 'card/card.component.scss', 'card/card.component.ts'];
+  //   const requests = fileNames.map(file => this.http.get(`app/${directory}/${file}`, {responseType: 'text'}));
+  //   forkJoin(requests).subscribe((responses: string[]) => {
+  //     const files : any = {};
+  //     for (let index = 0; index < fileNames.length; index++) {
+  //       files[fileNames[index]] = responses[index];
+  //     }
+  //     sdk.embedProject(
+  //       'components-list-ide',
+  //       {
+  //         title: 'Card List',
+  //         description: 'test',
+  //         template: 'angular-cli',
+  //         files
+  //       },
+  //       { height: 500 }
+  //     );
+  //   });
+  // }
 }

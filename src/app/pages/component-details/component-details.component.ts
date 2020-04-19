@@ -11,14 +11,14 @@ import { ApiService } from 'src/app/shared/services/api.service';
   styleUrls: ['./component-details.component.scss']
 })
 export class ComponentDetailsComponent implements OnInit {
-
+  componentName: string;
   files: IFile[] = [];
   constructor(private route: ActivatedRoute, private api: ApiService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
-      const componentName: string = paramMap.get('component');
-      this.api.getComponentDetails(componentName).subscribe((response: any) => {
+      this.componentName = paramMap.get('component');
+      this.api.getComponentDetails(this.componentName).subscribe((response: any) => {
         this.embedIde(response.directory, response.fileNames);
       });
     });

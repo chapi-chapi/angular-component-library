@@ -12,10 +12,10 @@ export class ChapiChapiCardListComponent implements OnInit {
   cards$!: Observable<ICard[]>;
 
   @Input()
-  addItemLink!: string;
+  addItemLink!: CardLinkDelegate;
 
   @Input()
-  itemDetailsLink!: string;
+  itemDetailsLink!: CardLinkDelegate;
 
   constructor() { }
 
@@ -23,3 +23,5 @@ export class ChapiChapiCardListComponent implements OnInit {
   }
 
 }
+
+export type CardLinkDelegate = (card: ICard) => string;

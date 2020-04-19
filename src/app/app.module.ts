@@ -31,35 +31,10 @@ import { ApiErrorInterceptor } from "./shared/interceptors/api-error.interceptor
 import { NotificationsService } from "./shared/services/notifications.service";
 import { MockApiModule } from "./modules/mock-api/mock-api.module";
 import { ChapiChapiCardModule } from './modules/card/card.module';
-import { IMockInterceptorData } from './modules/mock-api/models/IMockInterceptorData';
 import { environment } from 'src/environments/environment';
 import { LoadingModule } from './modules/loading/loading.module';
 import { ComponentDetailsComponent } from './pages/component-details/component-details.component';
-
-const mockApi : IMockInterceptorData[] = [
-  {
-    url: "/api/components",
-    httpVerb: "GET",
-    data: [
-      {
-        name: "Mock Api",
-        subtitle: "Interceptor",
-        description: "Provides an interceptor for mocking API calls.",
-        insertedUtc: new Date(),
-        updatedUtc: new Date(),
-      },
-    ],
-  },
-  {
-    url: "/api/components/card",
-    httpVerb: "GET",
-    data:
-      {
-        directory: 'modules/card',
-        fileNames: ['card/card.component.html', 'card/card.component.scss', 'card/card.component.ts']
-      }
-  }
-];
+import { mockApi } from './mock-api';
 
 @NgModule({
   declarations: [
