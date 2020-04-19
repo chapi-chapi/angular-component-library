@@ -67,7 +67,7 @@ import { mockApi } from './mock-api';
     TimeagoModule.forRoot(),
     ChapiChapiCardModule,
     LoadingModule.forRoot(),
-    MockApiModule.forRoot(mockApi, environment.mock, 3000)
+    MockApiModule.forRoot(mockApi, environment.mock, 2000)
   ],
   providers: [
     NotificationsService,
