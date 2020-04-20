@@ -30,7 +30,7 @@ export class ComponentDetailsComponent implements OnInit {
       const filesObj: any = {};
       for (let index = 0; index < fileNames.length; index++) {
         this.files.push({fileName: fileNames[index], fileContents: responses[index]});
-        filesObj[fileNames[index]] = responses[index];
+        filesObj[`src/modules/${fileNames[index]}`] = responses[index];
       }
       sdk.embedProject(
         'components-list-ide',
@@ -40,7 +40,8 @@ export class ComponentDetailsComponent implements OnInit {
           template: 'angular-cli',
           files: filesObj
         },
-        { height: 400 }
+        { height: 600, view: 'editor', hideNavigation: true,
+        openFile: `src/modules/${this.files.filter(x => x.fileName.toLowerCase().indexOf('module.ts') > -1)[0].fileName}` }
       );
     });
   }

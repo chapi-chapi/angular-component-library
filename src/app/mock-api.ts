@@ -17,7 +17,7 @@ const getComponentFileNames = (name: string) => [
   `components/${name}/${name}.component.ts`
 ];
 
-const componentsToDisplay : IComponentDetails[] = [
+const componentsToDisplay: IComponentDetails[] = [
   {
     name: 'loading',
     type: 'Interceptor, Service, Component',
@@ -34,9 +34,9 @@ const componentsToDisplay : IComponentDetails[] = [
     directory: 'modules/mock-api',
     hasInterceptor: true
   }
-]
+];
 
-export const mockApi : IMockInterceptorData[] = [
+export const mockApi: IMockInterceptorData[] = [
   {
     url: '/api/components',
     httpVerb: 'GET',
