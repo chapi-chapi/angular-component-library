@@ -1,0 +1,31 @@
+<mat-card matRipple class="chapichapi-card" [style.border-bottom-color]="card.borderBottomColor" *ngIf="card">
+  <mat-card-header>
+    <div mat-card-avatar class="chapichapi-card-avatar-container">
+      <img
+        *ngIf="card.avatarUrl"
+        [src]="card.avatarUrl"
+        aria-hidden="false"
+        class="chapichapi-card-avatar"
+        aria-label="Card avatar"
+      />
+      <mat-icon
+        *ngIf="card.avatarIcon && !card.avatarUrl"
+        aria-hidden="false"
+        class="chapichapi-card-avatar"
+        aria-label="Card avatar"
+        >{{ card.avatarIcon }}</mat-icon
+      >
+    </div>
+    <mat-card-title>{{ card.title }}</mat-card-title>
+    <mat-card-subtitle>{{ card.subtitle }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ card.body }}</p>
+    <div class="chapichapi-modified-info" *ngIf="card.created">
+      <strong>Created:</strong> {{ card.created | timeago }}
+    </div>
+    <div class="chapichapi-modified-info" *ngIf="card.updated">
+      <strong>Last updated:</strong> {{ card.updated | timeago }}
+    </div>
+  </mat-card-content>
+</mat-card>
