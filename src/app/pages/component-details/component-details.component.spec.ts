@@ -1,17 +1,17 @@
 // import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { ComponentsComponent } from './components.component';
-// import { ApiService } from '../../shared/services/api.service';
-// import { HttpClientModule, HttpClient } from '@angular/common/http';
+// import { ComponentDetailsComponent } from './component-details.component';
 // import { RouterTestingModule } from '@angular/router/testing';
+// import { ApiService } from 'src/app/shared/services/api.service';
+// import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-// describe('ComponentsComponent', () => {
-//   let component: ComponentsComponent;
-//   let fixture: ComponentFixture<ComponentsComponent>;
+// describe('ComponentDetailsComponent', () => {
+//   let component: ComponentDetailsComponent;
+//   let fixture: ComponentFixture<ComponentDetailsComponent>;
 
 //   beforeEach(async(() => {
 //     TestBed.configureTestingModule({
-//       declarations: [ ComponentsComponent ],
+//       declarations: [ ComponentDetailsComponent ],
 //       providers: [ApiService, HttpClient],
 //       imports: [HttpClientModule, RouterTestingModule]
 //     })
@@ -19,7 +19,7 @@
 //   }));
 
 //   beforeEach(() => {
-//     fixture = TestBed.createComponent(ComponentsComponent);
+//     fixture = TestBed.createComponent(ComponentDetailsComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });
