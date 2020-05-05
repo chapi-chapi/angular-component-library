@@ -2,6 +2,7 @@
 const libsPath = "./projects/chapichapi";
 const angularJsonPath = "./angular.json";
 const scopeName = "@chapichapi";
+const showcaseProjectName = 'angular-component-library';
 
 const consoleColors = {
   reset: "\x1b[0m",
@@ -11,26 +12,39 @@ const consoleColors = {
 const output = (outputText) =>
   console.log(consoleColors.fgCyan, outputText, consoleColors.reset);
 
+const getProjectNames = () =>
+  require("fs")
+    .readdirSync(libsPath, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name);
+
 /** Takes in an argument for a comma seperated list of libraries (or an individual one) to perform a specific command on each library specified.
  * @param individualLibCommandFunc A callback function of type ```:: libName:string => string```.
+ * @param getAllProjectsIfNoArgs If set to true then will run command against all projects in projects folder if no args are passed in.
  * For example ```(libName) => `dosomethingWith(${libName})` ```
  */
-const processLibScript = (individualLibCommandFunc) => {
+const processLibScript = (
+  individualLibCommandFunc,
+  getAllProjectsIfNoArgs = true
+) => {
   const shell = require("shelljs");
   const args = process.argv.slice(1);
   let libs = [];
-  if (!args || args.length === 0) {
-    const { readdirSync } = require("fs");
-    const path = require("path");
-    const projectsPath = path.resolve(libsPath);
-    output(
-      `No library name(s) passed in, getting all libraries from ${projectsPath}.`
-    );
+  if (getAllProjectsIfNoArgs) {
+    if (!args || args.length === 0) {
+      const path = require("path");
+      const projectsPath = path.resolve(libsPath);
+      output(
+        `No library name(s) passed in, getting all libraries from ${projectsPath}.`
+      );
 
-    libs = readdirSync(projectsPath, { withFileTypes: true })
-      .filter((dirent) => dirent.isDirectory())
-      .map((dirent) => dirent.name);
+      libs = getProjectNames();
+    }
   } else {
+    if (args.length === 0) {
+      output("You must specify a library name!");
+      return;
+    }
     libs = args
       .map((args) => args.split(","))
       .reduce((acc, arg) => acc.concat(arg))
@@ -70,20 +84,39 @@ const publish = () =>
   processLibScript((lib) =>
     performCommandInLibDistFolder(lib, "npm publish --access public")
   );
+const add = () =>
+  processLibScript(
+    (lib) =>
+      `ng generate library @chapichapi/ngx-${lib} && npm run libs:tidyAngularJson`,
+    false
+  );
+const remove = () =>
+  processLibScript((lib) => `rimraf ${libsPath}\\ngx-${lib}`, false);
 
 const tidyAngularJson = () => {
   const fs = require("fs");
+
+  const libNames = getProjectNames();
   const ngJson = JSON.parse(fs.readFileSync(angularJsonPath));
   const ngJsonProjects = ngJson.projects;
+
+  output("Current Projects in angular.json:");
   console.log(Object.keys(ngJsonProjects));
-  Object.keys(ngJsonProjects)
-    .filter((x) => x.startsWith(`${scopeName}/`))
-    .forEach((longLibName) => {
-      const trimmedLibName = longLibName.replace(`${scopeName}/`, "");
+
+  Object.keys(ngJsonProjects).filter(x => x !== showcaseProjectName).forEach((longLibName) => {
+    const trimmedLibName = longLibName.replace(`${scopeName}/`, "");
+    if (longLibName.startsWith(`${scopeName}/`)) {
       console.log(`${longLibName} needs to be shortened to ${trimmedLibName}`);
       ngJsonProjects[trimmedLibName] = ngJsonProjects[longLibName]; // create new key with old key value
       delete ngJsonProjects[longLibName]; // then remove old key
-    });
+    }
+    if (!libNames.some((x) => x === longLibName || x === trimmedLibName)) {
+      output(
+        `${longLibName} was found in angular.json but not in ${libsPath} - DELETING FROM ANGULAR.JSON`
+      );
+      delete ngJsonProjects[longLibName]; // remove key as no associated project
+    }
+  });
   console.log(ngJsonProjects);
   ngJson.projects = ngJsonProjects;
   fs.writeFileSync(angularJsonPath, JSON.stringify(ngJson, null, 4));
@@ -105,6 +138,12 @@ module.exports = {
     build();
     pack();
     publish();
+  },
+
+  add,
+  remove: () => {
+    remove();
+    tidyAngularJson();
   },
 
   tidyAngularJson,

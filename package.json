@@ -8,6 +8,8 @@
     "ng": "ng",
     "clean": "rimraf ./dist",
     "serve:all": "wait-on dist && ng serve",
+    "libs:add": "node -e \"require('./build-scripts/library-scripts').add()\"",
+    "libs:remove": "node -e \"require('./build-scripts/library-scripts').remove()\"",
     "libs:build": "node -e \"require('./build-scripts/library-scripts').build()\"",
     "libs:build:watch": "node -e \"require('./build-scripts/library-scripts').build(true)\"",
     "start": "npm run clean && run-p libs:build:watch serve:all",
