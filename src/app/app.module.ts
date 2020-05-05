@@ -29,7 +29,7 @@ import { TimeagoModule } from 'ngx-timeago';
 
 import { ApiErrorInterceptor } from './shared/interceptors/api-error.interceptor';
 import { NotificationsService } from './shared/services/notifications.service';
-import { MockApiModule } from './modules/mock-api/mock-api.module';
+import { MockApiModule } from '@chapichapi/ngx-mock-api';
 import { ChapiChapiCardModule } from './modules/card/card.module';
 import { environment } from 'src/environments/environment';
 import { LoadingModule } from './modules/loading/loading.module';

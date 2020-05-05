@@ -1,4 +1,4 @@
-import { IMockInterceptorData } from './modules/mock-api/models/IMockInterceptorData';
+import { IMockInterceptorData } from '@chapichapi/ngx-mock-api';
 
 interface IComponentDetails {
   name: string;
