@@ -1,6 +1,6 @@
 {
   "name": "@chapichapi/ngx.mock-api",
-  "version": "1.2.0",
+  "version": "0.0.1",
   "keywords": ["ngx", "angular", "chapichapi", "chapi-chapi",
   "interceptor", "mock", "mock-api", "mockapi"],
   "peerDependencies": {

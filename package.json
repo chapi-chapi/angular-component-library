@@ -8,7 +8,9 @@
     "start:mock": "ng serve --configuration=mock",
     "ng": "ng",
     "clean": "rimraf ./dist",
-    "start": "ng serve",
+    "serve:all": "wait-on dist && ng serve",
+    "watch-lib:mock-api": "ng build ngx-mock-api --watch",
+    "start": "npm run clean && run-p watch-lib:mock-api serve:all",
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
@@ -64,10 +66,12 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
     "ng-packagr": "^9.1.0",
+    "npm-run-all": "^4.1.5",
     "protractor": "~5.4.3",
     "puppeteer": "^2.1.1",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
-    "typescript": "~3.7.5"
+    "typescript": "~3.7.5",
+    "wait-on": "^5.0.0"
   }
 }

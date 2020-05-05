@@ -24,7 +24,7 @@ export class MockApiInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     handler: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    console.log('hello!');
+    console.log('POOP');
     if (this.isActive) {
         const mockApiUrl = this.mockApiData.find(
           (url) => url.url === request.url && url.httpVerb === request.method

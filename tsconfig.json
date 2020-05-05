@@ -21,8 +21,7 @@
     ],
     "paths": {
       "@chapichapi/ngx-mock-api": [
-        "dist/chapichapi/ngx-mock-api/chapichapi-ngx-mock-api",
-        "dist/chapichapi/ngx-mock-api"
+        "./dist/chapichapi/ngx-mock-api"
       ]
     }
   },
