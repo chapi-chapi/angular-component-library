@@ -140,7 +140,7 @@
         }
       }
     },
-    "ngx-mock-api": {
+    "@chapichapi/ngx-mock-api": {
       "projectType": "library",
       "root": "projects/chapichapi/ngx-mock-api",
       "sourceRoot": "projects/chapichapi/ngx-mock-api/src",
@@ -172,6 +172,46 @@
             "tsConfig": [
               "projects/chapichapi/ngx-mock-api/tsconfig.lib.json",
               "projects/chapichapi/ngx-mock-api/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@chapichapi/ngx-loading": {
+      "projectType": "library",
+      "root": "projects/chapichapi/ngx-loading",
+      "sourceRoot": "projects/chapichapi/ngx-loading/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/chapichapi/ngx-loading/tsconfig.lib.json",
+            "project": "projects/chapichapi/ngx-loading/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/chapichapi/ngx-loading/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/chapichapi/ngx-loading/src/test.ts",
+            "tsConfig": "projects/chapichapi/ngx-loading/tsconfig.spec.json",
+            "karmaConfig": "projects/chapichapi/ngx-loading/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/chapichapi/ngx-loading/tsconfig.lib.json",
+              "projects/chapichapi/ngx-loading/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

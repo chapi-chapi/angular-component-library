@@ -7,7 +7,15 @@ This is a component library for various angular packages.
 The project acts as a runnable application that can also be used to generate individual npm packages.
 To run locally use:
 
-```npm run start:mock```
+```npm run start```
+
+This will run a build --watch against all projects and also serve the app in parallel.
+
+# Add a new library
+To add a new library run (from the root directory):
+`ng generate library @chapichapi/ngx-library-name`
+
+This will add the library into the `projects` directory under the `chapichapi` folder.
 
 # Packaging
 The point of this project is to build out a _normal_ angular application for displaying the components, whilst seperating each logical grouping into its own module/package.

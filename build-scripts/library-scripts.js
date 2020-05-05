@@ -1,12 +1,15 @@
 #! /usr/bin/env node
-const libsPath = './projects/chapichapi';
+const libsPath = "./projects/chapichapi";
+const angularJsonPath = "./angular.json";
+const scopeName = "@chapichapi";
 
 const consoleColors = {
   reset: "\x1b[0m",
   fgCyan: "\x1b[36m",
 };
 
-const output = (outputText) => console.log(consoleColors.fgCyan, outputText, consoleColors.reset);
+const output = (outputText) =>
+  console.log(consoleColors.fgCyan, outputText, consoleColors.reset);
 
 /** Takes in an argument for a comma seperated list of libraries (or an individual one) to perform a specific command on each library specified.
  * @param individualLibCommandFunc A callback function of type ```:: libName:string => string```.
@@ -50,7 +53,7 @@ const processLibScript = (individualLibCommandFunc) => {
     );
     shell.exec(command);
 
-    output('Task Complete :)');
+    output("Task Complete :)");
   }
 };
 
@@ -59,11 +62,32 @@ const processLibScript = (individualLibCommandFunc) => {
 const performCommandInLibDistFolder = (lib, command) =>
   `cd .\\dist\\${lib} && ${command} && cd ../..`;
 
-const build = (watch) => processLibScript((lib) => `ng build ${lib} ${watch ? '--watch' : ''}`);
+const build = (watch) =>
+  processLibScript((lib) => `ng build ${lib} ${watch ? "--watch" : ""}`);
 const pack = () =>
   processLibScript((lib) => performCommandInLibDistFolder(lib, "npm pack"));
 const publish = () =>
-  processLibScript((lib) => performCommandInLibDistFolder(lib, "npm publish"));
+  processLibScript((lib) =>
+    performCommandInLibDistFolder(lib, "npm publish --access public")
+  );
+
+const tidyAngularJson = () => {
+  const fs = require("fs");
+  const ngJson = JSON.parse(fs.readFileSync(angularJsonPath));
+  const ngJsonProjects = ngJson.projects;
+  console.log(Object.keys(ngJsonProjects));
+  Object.keys(ngJsonProjects)
+    .filter((x) => x.startsWith(`${scopeName}/`))
+    .forEach((longLibName) => {
+      const trimmedLibName = longLibName.replace(`${scopeName}/`, "");
+      console.log(`${longLibName} needs to be shortened to ${trimmedLibName}`);
+      ngJsonProjects[trimmedLibName] = ngJsonProjects[longLibName]; // create new key with old key value
+      delete ngJsonProjects[longLibName]; // then remove old key
+    });
+  console.log(ngJsonProjects);
+  ngJson.projects = ngJsonProjects;
+  fs.writeFileSync(angularJsonPath, JSON.stringify(ngJson, null, 4));
+};
 
 // USAGE:
 // All commands can be run using a parameter specifying a single library name or a comma seperated list of library names
@@ -82,4 +106,6 @@ module.exports = {
     pack();
     publish();
   },
+
+  tidyAngularJson,
 };

@@ -22,6 +22,16 @@
     "paths": {
       "@chapichapi/ngx-mock-api": [
         "./dist/chapichapi/ngx-mock-api"
+      ],
+      "@chapichapi/ngx-loading": [
+        "dist/chapichapi/ngx-loading/chapichapi-ngx-loading",
+        "dist/chapichapi/ngx-loading",
+        "dist/chapichapi/ngx-loading/chapichapi-ngx-loading",
+        "dist/chapichapi/ngx-loading"
+      ],
+      "@chapichapi/loading": [
+        "dist/chapichapi/loading/chapichapi-loading",
+        "dist/chapichapi/loading"
       ]
     }
   },
