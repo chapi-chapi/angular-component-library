@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "angular-component-library",
   "scripts": {
-    "mock:server": "json-server --port 5000 --routes mock-api/routes.json --watch mock-api/db.json --no-cors=true",
     "start:proxy": "ng serve --proxy-config proxy.conf.json",
     "start:mock": "ng serve --configuration=mock",
     "ng": "ng",
@@ -11,7 +10,8 @@
     "serve:all": "wait-on dist && ng serve",
     "watch-lib:mock-api": "ng build ngx-mock-api --watch",
     "libs:build": "node -e \"require('./build-scripts/library-scripts').build()\"",
-    "start": "npm run clean && run-p watch-lib:mock-api serve:all",
+    "libs:build:watch": "node -e \"require('./build-scripts/library-scripts').build(true)\"",
+    "start": "npm run clean && run-p libs:build:watch serve:all",
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",

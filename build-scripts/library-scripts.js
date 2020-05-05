@@ -3,33 +3,10 @@ const libsPath = './projects/chapichapi';
 
 const consoleColors = {
   reset: "\x1b[0m",
-  bright: "\x1b[1m",
-  dim: "\x1b[2m",
-  underscore: "\x1b[4m",
-  blink: "\x1b[5m",
-  reverse: "\x1b[7m",
-  hidden: "\x1b[8m",
-
-  fgBlack: "\x1b[30m",
-  fgRed: "\x1b[31m",
-  fgGreen: "\x1b[32m",
-  fgYellow: "\x1b[33m",
-  fgBlue: "\x1b[34m",
-  fgMagenta: "\x1b[35m",
   fgCyan: "\x1b[36m",
-  fgWhite: "\x1b[37m",
-
-  bgBlack: "\x1b[40m",
-  bgRed: "\x1b[41m",
-  bgGreen: "\x1b[42m",
-  bgYellow: "\x1b[43m",
-  bgBlue: "\x1b[44m",
-  bgMagenta: "\x1b[45m",
-  bgCyan: "\x1b[46m",
-  bgWhite: "\x1b[47m",
 };
 
-const output = (outputText, color) => console.log(color, outputText, consoleColors.reset);
+const output = (outputText) => console.log(consoleColors.fgCyan, outputText, consoleColors.reset);
 
 /** Takes in an argument for a comma seperated list of libraries (or an individual one) to perform a specific command on each library specified.
  * @param individualLibCommandFunc A callback function of type ```:: libName:string => string```.
@@ -44,7 +21,7 @@ const processLibScript = (individualLibCommandFunc) => {
     const path = require("path");
     const projectsPath = path.resolve(libsPath);
     output(
-      `No library name(s) passed in, getting all libraries from ${projectsPath}.`, consoleColors.fgYellow
+      `No library name(s) passed in, getting all libraries from ${projectsPath}.`
     );
 
     libs = readdirSync(projectsPath, { withFileTypes: true })
@@ -57,23 +34,23 @@ const processLibScript = (individualLibCommandFunc) => {
       .map((arg) => arg.trim());
   }
 
-  output(`Running command against ${libs.length} libs:`, consoleColors.fgCyan);
+  output(`Running command against ${libs.length} libs:`);
   console.log(libs);
 
   for (let index = 0; index < libs.length; index++) {
     const lib = libs[index];
     const command = individualLibCommandFunc(lib);
     output(
-      "------------------------------------------------------------------------------", consoleColors.fgCyan
+      "------------------------------------------------------------------------------"
     );
-    output(`Processing library ${index + 1} of ${libs.length}`, consoleColors.fgCyan);
-    output(command, consoleColors.fgCyan);
+    output(`Processing library ${index + 1} of ${libs.length}`);
+    output(command);
     output(
-      "------------------------------------------------------------------------------", consoleColors.fgCyan
+      "------------------------------------------------------------------------------"
     );
     shell.exec(command);
 
-    output('Task Complete :)', consoleColors.fgCyan);
+    output('Task Complete :)');
   }
 };
 
@@ -82,7 +59,7 @@ const processLibScript = (individualLibCommandFunc) => {
 const performCommandInLibDistFolder = (lib, command) =>
   `cd .\\dist\\${lib} && ${command} && cd ../..`;
 
-const build = () => processLibScript((lib) => `ng build ${lib} --prod`);
+const build = (watch) => processLibScript((lib) => `ng build ${lib} ${watch ? '--watch' : ''}`);
 const pack = () =>
   processLibScript((lib) => performCommandInLibDistFolder(lib, "npm pack"));
 const publish = () =>
