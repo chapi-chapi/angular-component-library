@@ -2,7 +2,7 @@
 const libsPath = "./projects/chapichapi";
 const angularJsonPath = "./angular.json";
 const scopeName = "@chapichapi";
-const showcaseProjectName = 'angular-component-library';
+const showcaseProjectName = "angular-component-library";
 
 const consoleColors = {
   reset: "\x1b[0m",
@@ -18,28 +18,17 @@ const getProjectNames = () =>
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 
-/** Takes in an argument for a comma seperated list of libraries (or an individual one) to perform a specific command on each library specified.
- * @param individualLibCommandFunc A callback function of type ```:: libName:string => string```.
- * @param getAllProjectsIfNoArgs If set to true then will run command against all projects in projects folder if no args are passed in.
- * For example ```(libName) => `dosomethingWith(${libName})` ```
- */
-const processLibScript = (
-  individualLibCommandFunc,
-  getAllProjectsIfNoArgs = true
-) => {
-  const shell = require("shelljs");
+const getLibArgs = (getAllProjectsIfNoArgs = true) => {
   const args = process.argv.slice(1);
   let libs = [];
-  if (getAllProjectsIfNoArgs) {
-    if (!args || args.length === 0) {
-      const path = require("path");
-      const projectsPath = path.resolve(libsPath);
-      output(
-        `No library name(s) passed in, getting all libraries from ${projectsPath}.`
-      );
+  if ((getAllProjectsIfNoArgs && !args) || args.length === 0) {
+    const path = require("path");
+    const projectsPath = path.resolve(libsPath);
+    output(
+      `No library name(s) passed in, getting all libraries from ${projectsPath}.`
+    );
 
-      libs = getProjectNames();
-    }
+    libs = getProjectNames();
   } else {
     if (args.length === 0) {
       output("You must specify a library name!");
@@ -50,7 +39,19 @@ const processLibScript = (
       .reduce((acc, arg) => acc.concat(arg))
       .map((arg) => arg.trim());
   }
+  return libs;
+};
 
+/** Takes in an argument for a comma seperated list of libraries (or an individual one) to perform a specific command on each library specified.
+ * @param individualLibCommandFunc A callback function of type ```:: libName:string => string```.
+ * @param getAllProjectsIfNoArgs If set to true then will run command against all projects in projects folder if no args are passed in.
+ * For example ```(libName) => `dosomethingWith(${libName})` ```
+ */
+const processLibScript = (
+  individualLibCommandFunc,
+  getAllProjectsIfNoArgs = true
+) => {
+  const libs = getLibArgs(getAllProjectsIfNoArgs);
   output(`Running command against ${libs.length} libs:`);
   console.log(libs);
 
@@ -65,10 +66,12 @@ const processLibScript = (
     output(
       "------------------------------------------------------------------------------"
     );
+    const shell = require("shelljs");
     shell.exec(command);
 
     output("Task Complete :)");
   }
+  return libs;
 };
 
 /** ## Get into the folder. Do the command. Get back in time for tea.
@@ -103,20 +106,24 @@ const tidyAngularJson = () => {
   output("Current Projects in angular.json:");
   console.log(Object.keys(ngJsonProjects));
 
-  Object.keys(ngJsonProjects).filter(x => x !== showcaseProjectName).forEach((longLibName) => {
-    const trimmedLibName = longLibName.replace(`${scopeName}/`, "");
-    if (longLibName.startsWith(`${scopeName}/`)) {
-      console.log(`${longLibName} needs to be shortened to ${trimmedLibName}`);
-      ngJsonProjects[trimmedLibName] = ngJsonProjects[longLibName]; // create new key with old key value
-      delete ngJsonProjects[longLibName]; // then remove old key
-    }
-    if (!libNames.some((x) => x === longLibName || x === trimmedLibName)) {
-      output(
-        `${longLibName} was found in angular.json but not in ${libsPath} - DELETING FROM ANGULAR.JSON`
-      );
-      delete ngJsonProjects[longLibName]; // remove key as no associated project
-    }
-  });
+  Object.keys(ngJsonProjects)
+    .filter((x) => x !== showcaseProjectName)
+    .forEach((longLibName) => {
+      const trimmedLibName = longLibName.replace(`${scopeName}/`, "");
+      if (longLibName.startsWith(`${scopeName}/`)) {
+        console.log(
+          `${longLibName} needs to be shortened to ${trimmedLibName}`
+        );
+        ngJsonProjects[trimmedLibName] = ngJsonProjects[longLibName]; // create new key with old key value
+        delete ngJsonProjects[longLibName]; // then remove old key
+      }
+      if (!libNames.some((x) => x === longLibName || x === trimmedLibName)) {
+        output(
+          `${longLibName} was found in angular.json but not in ${libsPath} - DELETING FROM ANGULAR.JSON`
+        );
+        delete ngJsonProjects[longLibName]; // remove key as no associated project
+      }
+    });
   console.log(ngJsonProjects);
   ngJson.projects = ngJsonProjects;
   fs.writeFileSync(angularJsonPath, JSON.stringify(ngJson, null, 4));
@@ -147,4 +154,23 @@ module.exports = {
   },
 
   tidyAngularJson,
+
+  buildAndServe: () => {
+    const concurrently = require("concurrently");
+    const shell = require("shelljs");
+    const libs = getLibArgs();
+    output(libs);
+    const fileToWaitOn = `dist\\${scopeName.replace("@", "")}\\${
+      libs[libs.length - 1]
+    }\\public-api.d.ts`;
+    const waitAndServeCommand = `wait-on ${fileToWaitOn} && ng serve`;
+    const libCommands = libs.map((lib) => `ng build ${lib} --watch`);
+    libCommands.push(waitAndServeCommand);
+    output(`${libCommands.length} commands to run concurrently:`);
+    output(libCommands);
+    // output(`Waiting on ${fileToWaitOn} to be built before serving app`);
+    output("Cleaning dist folder");
+    shell.exec("rimraf ./dist");
+    concurrently(libCommands).then(() => output("All Done :)"));
+  },
 };
