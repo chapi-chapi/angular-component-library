@@ -1,4 +1,29 @@
 # NgxLoading
+This package provides a module that can be added to your angular module to intercept API calls and display a loading spinner on the page.
+
+Simply add the following references:
+
+```ts
+import { LoadingModule } from '@chapichapi/ngx.loading';
+```
+
+And then in the imports section:
+
+```ts
+LoadingModule.forRoot()
+```
+
+You can turn off the interceptor if you don't want http calls to automatically show the loader by specifying:
+
+```ts
+LoadingModule.forRoot(false)
+```
+
+Then place the loader component inside your app's HTML:
+
+```html
+<chapichapi-loader></chapichapi-loader>
+```
 
 This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.7.
 

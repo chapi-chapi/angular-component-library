@@ -1,12 +1,11 @@
+// ANGULAR IMPORTS
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AppComponent } from './app.component';
-import { ComponentsComponent } from './pages/components/components.component';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// MATERIAL/THIRD PARTY IMPORTS
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -24,17 +23,22 @@ import {
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TimeagoModule } from 'ngx-timeago';
 
+// SHOWCASE APP IMPORTS
+import { AppComponent } from './app.component';
+import { ComponentsComponent } from './pages/components/components.component';
+import { AppRoutingModule } from './app-routing.module';
 import { ApiErrorInterceptor } from './shared/interceptors/api-error.interceptor';
 import { NotificationsService } from './shared/services/notifications.service';
-import { MockApiModule } from '@chapichapi/ngx-mock-api';
 import { ChapiChapiCardModule } from './modules/card/card.module';
 import { environment } from 'src/environments/environment';
-import { LoadingModule } from './modules/loading/loading.module';
 import { ComponentDetailsComponent } from './pages/component-details/component-details.component';
 import { mockApi } from './mock-api';
+
+// PROJECT IMPORTS
+import { MockApiModule } from '@chapichapi/ngx-mock-api';
+import { LoadingModule } from '@chapichapi/ngx-loading';
 
 @NgModule({
   declarations: [
