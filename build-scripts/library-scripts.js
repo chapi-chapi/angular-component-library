@@ -3,6 +3,14 @@ const libsPath = "./projects/chapichapi";
 const angularJsonPath = "./angular.json";
 const scopeName = "@chapichapi";
 const showcaseProjectName = "angular-component-library";
+const libPrefix = "ngx-";
+const ensurePrefix = (libName) => libPrefix?
+  `${libPrefix}${libName.replace(libPrefix, "")}` : libName;
+const ensurescopeName = (libName) => scopeName?
+`${scopeName.replace('@', '')}\\${libName.replace(scopeName, "")}` : libName;
+const isPublicScope = true;
+
+const waitOnFile = "public-api.d.ts";
 
 const consoleColors = {
   reset: "\x1b[0m",
@@ -77,7 +85,7 @@ const processLibScript = (
 /** ## Get into the folder. Do the command. Get back in time for tea.
  * Required because some `npm` commands don't let you provide an output flag or run against a different directory */
 const performCommandInLibDistFolder = (lib, command) =>
-  `cd .\\dist\\${lib} && ${command} && cd ../..`;
+  `cd .\\dist\\${ensurescopeName(ensurePrefix(lib))} && ${command} && cd ../..`;
 
 const build = (watch) =>
   processLibScript((lib) => `ng build ${lib} ${watch ? "--watch" : ""}`);
@@ -85,12 +93,12 @@ const pack = () =>
   processLibScript((lib) => performCommandInLibDistFolder(lib, "npm pack"));
 const publish = () =>
   processLibScript((lib) =>
-    performCommandInLibDistFolder(lib, "npm publish --access public")
+    performCommandInLibDistFolder(lib, `npm publish${isPublicScope ? ' --access public' : ''}`)
   );
 const add = () =>
   processLibScript(
     (lib) =>
-      `ng generate library @chapichapi/ngx-${lib} && npm run libs:tidyAngularJson`,
+      `ng generate library ${ensurescopeName(ensurePrefix(lib))} && npm run libs:tidyAngularJson`,
     false
   );
 const remove = () =>
@@ -129,6 +137,60 @@ const tidyAngularJson = () => {
   fs.writeFileSync(angularJsonPath, JSON.stringify(ngJson, null, 4));
 };
 
+const getLibDependenciesToWaitOn = (libName) => {
+  const fs = require("fs");
+  const packageJson = JSON.parse(
+    fs.readFileSync(`dist\\${ensurescopeName(ensurePrefix(libName))}\\package.json`)
+  );
+  const peerDependencies = packageJson.peerDependencies;
+  if (peerDependencies) {
+    const projects = getProjectNames();
+    const dependencies = Object.keys(peerDependencies).filter(
+      (key) => projects.indexOf(key) > -1
+    );
+    if (dependencies.length > 0) {
+      output(`Found ${dependencies.length} project dependencies dependencies in ${libName}`);
+      console.log(dependencies);
+      return `wait-on ${dependencies
+        .map((x) => `dist\\${ensurescopeName(ensurePrefix(x))}\\${waitOnFile}`)
+        .join(" ")} && `;
+    }
+  }
+  return "";
+};
+
+const buildAndServe = () => {
+  const concurrently = require("concurrently");
+  const libs = getLibArgs(false).map((x) => ensurePrefix(x));
+  output(libs);
+
+  const projectNames = getProjectNames();
+  const preBuiltProjects = getProjectNames("./dist" + scopeName ? `/${scopeName}` : '');
+  const unBuiltProjects = projectNames.filter(
+    (x) => preBuiltProjects.indexOf(x) === -1 && libs.indexOf(x) === -1
+  );
+  const filesToWaitOn = libs
+    .map((lib) => `dist\\${ensurescopeName(ensurePrefix(lib))}\\${waitOnFile}`)
+    .join(" ");
+  const waitAndServeCommand = `wait-on ${filesToWaitOn} && ng serve`;
+  const libCommands = libs.map(
+    (lib) =>
+      `rimraf dist\\${ensurescopeName(ensurePrefix(lib))} && ${getLibDependenciesToWaitOn(
+        lib,
+        libs
+      )}ng build ${lib} --watch`
+  );
+  if (unBuiltProjects.length > 0) {
+    output("Unbuilt Projects found:");
+    console.log(unBuiltProjects);
+    libCommands.push(unBuiltProjects.map((x) => `ng build ${x}`).join(" && "));
+  }
+  libCommands.push(waitAndServeCommand);
+  output(`${libCommands.length} commands to run concurrently:`);
+  output(libCommands);
+  concurrently(libCommands).then(() => output("All Done :)"));
+};
+
 // USAGE:
 // All commands can be run using a parameter specifying a single library name or a comma seperated list of library names
 // If no parameter is given then all library in the projects folder will be processed
@@ -155,22 +217,5 @@ module.exports = {
 
   tidyAngularJson,
 
-  buildAndServe: () => {
-    const concurrently = require("concurrently");
-    const shell = require("shelljs");
-    const libs = getLibArgs();
-    output(libs);
-    const fileToWaitOn = `dist\\${scopeName.replace("@", "")}\\${
-      libs[libs.length - 1]
-    }\\public-api.d.ts`;
-    const waitAndServeCommand = `wait-on ${fileToWaitOn} && ng serve`;
-    const libCommands = libs.map((lib) => `ng build ${lib} --watch`);
-    libCommands.push(waitAndServeCommand);
-    output(`${libCommands.length} commands to run concurrently:`);
-    output(libCommands);
-    // output(`Waiting on ${fileToWaitOn} to be built before serving app`);
-    output("Cleaning dist folder");
-    shell.exec("rimraf ./dist");
-    concurrently(libCommands).then(() => output("All Done :)"));
-  },
+  buildAndServe,
 };

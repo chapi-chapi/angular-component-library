@@ -12,12 +12,11 @@ const routes: Routes = [
   {
     path: 'component-details/:component',
     component: ComponentDetailsComponent
+  },
+  { path: '',
+    redirectTo: '/components',
+    pathMatch: 'full'
   }
-  // ,
-  // { path: '',
-  //   redirectTo: '/components',
-  //   pathMatch: 'full'
-  // }
 ];
 
 @NgModule({

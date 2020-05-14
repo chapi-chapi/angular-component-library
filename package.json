@@ -7,7 +7,7 @@
     "start:mock": "ng serve --configuration=mock",
     "ng": "ng",
     "clean": "rimraf ./dist",
-    "serve:waitForBuild": "node -e \"require('./build-scripts/library-scripts').waitForBuildToServe()\"",
+    "libs:serve": "node -e \"require('./build-scripts/library-scripts').buildAndServe()\"",
     "libs:add": "node -e \"require('./build-scripts/library-scripts').add()\"",
     "libs:remove": "node -e \"require('./build-scripts/library-scripts').remove()\"",
     "libs:build": "node -e \"require('./build-scripts/library-scripts').build()\"",
