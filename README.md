@@ -7,7 +7,29 @@ This is a component library for various angular packages.
 The project acts as a runnable application that can also be used to generate individual npm packages.
 To run locally use:
 
-```npm run start:mock```
+```npm run start```
+
+This will run a build --watch against all projects and also serve the app in parallel.
+
+# Add a new library
+To add a new library run (from the root directory):
+`npm run libs:add library-name`
+
+This will add a new project within the chapichapi scope namespace inside the projects folder and with the ngx prefix:
+
+![Add lib](./screenshots/npm-add-lib.PNG)
+
+and then also tidy up the angular json by removing the `@chapichapi/` prefix from the projects key as this is invalid.
+
+![Add lib](./screenshots/npm-add-lib2.PNG)
+
+# Removing a library
+You can remove a library by running (from the root directory):
+`npm run libs:remove library-name`
+
+This deletes the library from the projects folder and then cleans up the reference to it in the angular.json file:
+
+![Remove lib](./screenshots/npm-remove-lib.PNG)
 
 # Packaging
 The point of this project is to build out a _normal_ angular application for displaying the components, whilst seperating each logical grouping into its own module/package.

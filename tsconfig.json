@@ -18,10 +18,28 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@chapichapi/ngx-mock-api": [
+        "./dist/chapichapi/ngx-mock-api"
+      ],
+      "@chapichapi/ngx-loading": [
+        "dist/chapichapi/ngx-loading/chapichapi-ngx-loading",
+        "dist/chapichapi/ngx-loading",
+        "dist/chapichapi/ngx-loading/chapichapi-ngx-loading",
+        "dist/chapichapi/ngx-loading"
+      ],
+      "@chapichapi/ngx-card": [
+        "dist/chapichapi/ngx-card/chapichapi-ngx-card",
+        "dist/chapichapi/ngx-card",
+        "dist/chapichapi/ngx-card/chapichapi-ngx-card",
+        "dist/chapichapi/ngx-card"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "enableResourceInlining": true
   }
 }

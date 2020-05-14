@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "description": "angular-component-library",
   "scripts": {
-    "mock:server": "json-server --port 5000 --routes mock-api/routes.json --watch mock-api/db.json --no-cors=true",
     "start:proxy": "ng serve --proxy-config proxy.conf.json",
     "start:mock": "ng serve --configuration=mock",
     "ng": "ng",
     "clean": "rimraf ./dist",
-    "start": "ng serve",
+    "libs:serve": "node -e \"require('./build-scripts/library-scripts').buildAndServe()\"",
+    "libs:add": "node -e \"require('./build-scripts/library-scripts').add()\"",
+    "libs:remove": "node -e \"require('./build-scripts/library-scripts').remove()\"",
+    "libs:build": "node -e \"require('./build-scripts/library-scripts').build()\"",
+    "libs:build:watch": "node -e \"require('./build-scripts/library-scripts').build(true)\"",
+    "start": "node -e \"require('./build-scripts/library-scripts').buildAndServe()\"",
+    "libs:tidyAngularJson": "node -e \"require('./build-scripts/library-scripts').tidyAngularJson()\"",
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
@@ -17,11 +22,7 @@
     "e2e": "ng e2e",
     "build:ci": "npm run clean && npm run test && npm run build:prod",
     "deploy:github-pages": "ng deploy --base-href=/angular-component-library/ --name=\"rogue-elephant\" --email=jup.trandell@gmail.com",
-    "start:proxy:mock:server": "concurrently --kill-others \"npm run mock:server\" \"npm run start:proxy\"",
-    "package:mock-api": "ng-packagr -p ./src/app/modules/mock-api/package.json",
-    "package:publish:mock-api": "npm publish ./dist/packages/@chapichapi/mock-api --access public",
-    "package:loading": "ng-packagr -p ./src/app/modules/loading/package.json",
-    "package:publish:loading": "npm publish ./dist/packages/@chapichapi/loading --access public"
+    "start:proxy:mock:server": "concurrently --kill-others \"npm run mock:server\" \"npm run start:proxy\""
   },
   "private": false,
   "dependencies": {
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.900.3",
+    "@angular-devkit/build-ng-packagr": "~0.901.0",
     "@angular/cli": "~9.0.3",
     "@angular/compiler-cli": "~9.0.2",
     "@angular/language-service": "~9.0.2",
@@ -53,7 +55,7 @@
     "@types/node": "^12.11.1",
     "angular-cli-ghpages": "^0.6.2",
     "codelyzer": "^5.1.2",
-    "concurrently": "^5.1.0",
+    "concurrently": "^5.2.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "json-server": "^0.16.1",
@@ -63,10 +65,13 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
     "ng-packagr": "^9.1.0",
+    "npm-run-all": "^4.1.5",
     "protractor": "~5.4.3",
     "puppeteer": "^2.1.1",
+    "shelljs": "^0.8.4",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
-    "typescript": "~3.7.5"
+    "typescript": "~3.7.5",
+    "wait-on": "^5.0.0"
   }
 }
