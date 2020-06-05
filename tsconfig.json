@@ -28,12 +28,6 @@
         "dist/chapichapi/ngx-loading",
         "dist/chapichapi/ngx-loading/chapichapi-ngx-loading",
         "dist/chapichapi/ngx-loading"
-      ],
-      "@chapichapi/ngx-card": [
-        "dist/chapichapi/ngx-card/chapichapi-ngx-card",
-        "dist/chapichapi/ngx-card",
-        "dist/chapichapi/ngx-card/chapichapi-ngx-card",
-        "dist/chapichapi/ngx-card"
       ]
     }
   },
