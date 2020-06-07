@@ -25,7 +25,7 @@ export class ComponentDetailsComponent implements OnInit {
   }
 
   embedIde(directory: string, fileNames: string[]) {
-    const requests = fileNames.map(file => this.http.get(`app/${directory}/${file}`, {responseType: 'text'}));
+    const requests = fileNames.map(file => this.http.get(`${directory}/${file}`, {responseType: 'text'}));
     forkJoin(requests).subscribe((responses: string[]) => {
       const filesObj: any = {};
       for (let index = 0; index < fileNames.length; index++) {

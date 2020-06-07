@@ -1,10 +1,9 @@
 import { IMockInterceptorData } from '@chapichapi/ngx-mock-api';
 
-interface IComponentDetails {
+interface ILibraryDetails {
   name: string;
   type: string;
   description: string;
-  directory: string;
   componentNames?: string[];
   hasService?: boolean;
   hasInterceptor?: boolean;
@@ -12,53 +11,51 @@ interface IComponentDetails {
 }
 
 const getComponentFileNames = (name: string) => [
-  `components/${name}/${name}.component.html`,
-  `components/${name}/${name}.component.scss`,
-  `components/${name}/${name}.component.ts`
+  `src/lib/components/${name}/${name}.component.html`,
+  `src/lib/components/${name}/${name}.component.scss`,
+  `src/lib/components/${name}/${name}.component.ts`
 ];
 
-const componentsToDisplay: IComponentDetails[] = [
+const componentsToDisplay: ILibraryDetails[] = [
   {
-    name: 'loading',
+    name: 'ngx-loading',
     type: 'Interceptor, Service, Component',
     description: 'Provides functionality for displaying loading indicators.',
-    directory: 'modules/loading',
     componentNames: ['loader'],
     hasService: true,
     hasInterceptor: true
   },
   {
-    name: 'mock-api',
+    name: 'ngx-mock-api',
     type: 'Interceptor',
     description: 'Provides functionality for mocking API calls.',
-    directory: 'modules/mock-api',
     hasInterceptor: true
   }
 ];
 
 export const mockApi: IMockInterceptorData[] = [
   {
-    url: '/api/components',
+    url: '/api/libraries',
     httpVerb: 'GET',
-    data: componentsToDisplay.map(component => ({
-        name: component.name,
-        subtitle: component.type,
-        description: component.description,
+    data: componentsToDisplay.map(library => ({
+        name: library.name,
+        subtitle: library.type,
+        description: library.description,
         insertedUtc: new Date(),
         updatedUtc: new Date(),
       }))
   },
-  ...componentsToDisplay.map(component => ({
-    url: `/api/components/${component.name}`,
+  ...componentsToDisplay.map(library => ({
+    url: `/api/libraries/${library.name}`,
     httpVerb: 'GET',
     data:
       {
-        directory: component.directory,
-        fileNames: ['README.md', `${component.name}.module.ts`,
-        ...(component.hasInterceptor ? [`interceptors/${component.name}.interceptor.ts`] : []),
-        ...(component.hasService ? [`services/${component.name}.service.ts`] : []),
-        ...(component.componentNames ? component.componentNames.map(name => getComponentFileNames(name)).reduce((acc, i) => acc.concat(i)) : []),
-        ...(component.fileNames ? component.fileNames : [])],
+        directory: `projects/chapichapi/${library.name}`,
+        fileNames: ['README.md', `src/lib/${library.name}.module.ts`,
+        ...(library.hasInterceptor ? [`src/lib/interceptors/${library.name}.interceptor.ts`] : []),
+        ...(library.hasService ? [`src/lib/services/${library.name}.service.ts`] : []),
+        ...(library.componentNames ? library.componentNames.map(name => getComponentFileNames(name)).reduce((acc, i) => acc.concat(i)) : []),
+        ...(library.fileNames ? library.fileNames : [])],
       }
   }) as any)
 ];
