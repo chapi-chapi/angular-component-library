@@ -1,6 +1,8 @@
 @import '~@angular/material/theming';
 $default-spacing: 12px;
-$primary-color: #228899;
+$primary-color: #673ab7;
+$accent-color: #303030;
+$background-color: linear-gradient(32deg, $accent-color 37%, $primary-color);
 
 html, body { height: 100%; }
 body {
@@ -8,6 +10,13 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   h1 {
     color: $primary-color;
+
+    &.headline {
+      font: bold 2.3rem Roboto, "Helvetica Neue", sans-serif;
+      background: -webkit-linear-gradient(90deg, $accent-color, $primary-color);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
 
   * {
@@ -22,3 +31,20 @@ body {
   background: #aa0033;
 }
 
+.chapichapi-outline {
+  position: relative;
+  align-items: center;
+  background-clip: padding-box;
+  border: solid 5px transparent;
+  border-radius: 1em;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1;
+    margin: -4px;
+    border-radius: inherit;
+    background: linear-gradient(to right, #303030, $primary-color);
+  }
+}

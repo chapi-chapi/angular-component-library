@@ -1,6 +1,6 @@
-<h1>{{componentName}}</h1>
+<h1 class="headline">{{libraryName}}</h1>
 
-<div id="components-list-ide"></div>
+<div id="libraries-list-ide"></div>
 <mat-tab-group>
   <mat-tab *ngFor="let file of files" label="{{file.fileName}}">
     <pre>{{file.fileContents}}</pre>
