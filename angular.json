@@ -163,7 +163,7 @@
           "options": {
             "main": "projects/chapichapi/ngx-mock-api/src/test.ts",
             "tsConfig": "projects/chapichapi/ngx-mock-api/tsconfig.spec.json",
-            "karmaConfig": "projects/chapichapi/ngx-mock-api/karma.conf.js"
+            "karmaConfig": "karma.conf.js"
           }
         },
         "lint": {
@@ -203,7 +203,7 @@
           "options": {
             "main": "projects/chapichapi/ngx-loading/src/test.ts",
             "tsConfig": "projects/chapichapi/ngx-loading/tsconfig.spec.json",
-            "karmaConfig": "projects/chapichapi/ngx-loading/karma.conf.js"
+            "karmaConfig": "karma.conf.js"
           }
         },
         "lint": {

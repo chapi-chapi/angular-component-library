@@ -2,5 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/chapi-chapi/ng-libs-helper/master/config.schema.json",
   "scopeName": "@chapichapi",
   "libraryNamePrefix": "ngx-",
-  "isPublicScope": true
+  "isPublicScope": true,
+  "karmaConfigPath": "./karma.conf.js"
 }
