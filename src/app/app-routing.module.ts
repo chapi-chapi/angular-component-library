@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ComponentsComponent } from './pages/components/components.component';
-import { ComponentDetailsComponent } from './pages/component-details/component-details.component';
+import { LibrariesListComponent } from './pages/libraries-list/libraries-list.component';
+import { LibraryDetailsComponent } from './pages/library-details/library-details.component';
 
 
 const routes: Routes = [
-  {
-    path: 'components',
-    component: ComponentsComponent
-  },
-  {
-    path: 'component-details/:component',
-    component: ComponentDetailsComponent
-  },
   { path: '',
-    redirectTo: '/components',
+    redirectTo: '/libraries',
     pathMatch: 'full'
+  },
+  {
+    path: 'libraries',
+    component: LibrariesListComponent
+  },
+  {
+    path: 'library-details/:library',
+    component: LibraryDetailsComponent
   }
 ];
 

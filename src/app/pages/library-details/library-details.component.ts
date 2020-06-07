@@ -6,19 +6,19 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
-  selector: 'app-component-details',
-  templateUrl: './component-details.component.html',
-  styleUrls: ['./component-details.component.scss']
+  selector: 'acl-library-details',
+  templateUrl: './library-details.component.html',
+  styleUrls: ['./library-details.component.scss']
 })
-export class ComponentDetailsComponent implements OnInit {
-  componentName: string;
+export class LibraryDetailsComponent implements OnInit {
+  libraryName: string;
   files: IFile[] = [];
   constructor(private route: ActivatedRoute, private api: ApiService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
-      this.componentName = paramMap.get('component');
-      this.api.getComponentDetails(this.componentName).subscribe((response: any) => {
+      this.libraryName = paramMap.get('library');
+      this.api.getLibraryDetails(this.libraryName).subscribe((response: any) => {
         this.embedIde(response.directory, response.fileNames);
       });
     });
@@ -33,7 +33,7 @@ export class ComponentDetailsComponent implements OnInit {
         filesObj[`src/modules/${fileNames[index]}`] = responses[index];
       }
       sdk.embedProject(
-        'components-list-ide',
+        'library-details-ide',
         {
           title: 'Card List',
           description: 'test',
