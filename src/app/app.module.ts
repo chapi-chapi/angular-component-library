@@ -24,6 +24,7 @@ import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 import { TimeagoModule } from 'ngx-timeago';
+import { MarkdownModule } from 'ngx-markdown';
 
 // SHOWCASE APP IMPORTS
 import { AppComponent } from './app.component';
@@ -68,6 +69,7 @@ import { LoadingModule } from '@chapichapi/ngx-loading';
     MatNativeDateModule,
     MatSnackBarModule,
     MatTabsModule,
+    MarkdownModule.forRoot(),
     TimeagoModule.forRoot(),
     ChapiChapiCardModule,
     LoadingModule.forRoot(),

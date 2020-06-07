@@ -3,6 +3,6 @@
 <div id="libraries-list-ide"></div>
 <mat-tab-group>
   <mat-tab *ngFor="let file of files" label="{{file.fileName}}">
-    <pre>{{file.fileContents}}</pre>
+    <markdown ngPreserveWhitespaces>{{file.fileContents}}</markdown>
   </mat-tab>
 </mat-tab-group>
