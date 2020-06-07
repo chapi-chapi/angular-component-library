@@ -116,7 +116,7 @@ MIT
 @angular/router
 MIT
 
-@chapichapi/ngx.loading
+@chapichapi/ngx-loading
 
 @chapichapi/ngx.mock-api
 
