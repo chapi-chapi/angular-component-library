@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../shared/services/api.service';
 import { Observable, forkJoin } from 'rxjs';
-import { IAclComponent } from '../../shared/models/IAclComponent';
+import { IACLLibrary } from '../../shared/models/IACLLibrary';
 import { Router } from '@angular/router';
 import { ICard } from '../../modules/card/ICard';
 import { map } from 'rxjs/operators';
@@ -25,13 +25,11 @@ export class ComponentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.components$ = this.api.getComponents().pipe(
-      map((components: IAclComponent[]) =>
+      map((components: IACLLibrary[]) =>
         components.map((component) => {
           const card: ICard = {
             title: component.name,
             subtitle: component.subtitle,
-            created: component.insertedUtc,
-            updated: component.updatedUtc,
             avatarIcon: 'code',
             id: component.id,
             body: component.description,
@@ -43,26 +41,4 @@ export class ComponentsComponent implements OnInit {
   }
 
   getDetailsLink : CardLinkDelegate = (card: ICard) => `/component-details/${card.title.toLowerCase()}`;
-
-  // embedIde() {
-  //   const directory = 'modules/card';
-  //   const fileNames = ['card/card.component.html', 'card/card.component.scss', 'card/card.component.ts'];
-  //   const requests = fileNames.map(file => this.http.get(`app/${directory}/${file}`, {responseType: 'text'}));
-  //   forkJoin(requests).subscribe((responses: string[]) => {
-  //     const files : any = {};
-  //     for (let index = 0; index < fileNames.length; index++) {
-  //       files[fileNames[index]] = responses[index];
-  //     }
-  //     sdk.embedProject(
-  //       'components-list-ide',
-  //       {
-  //         title: 'Card List',
-  //         description: 'test',
-  //         template: 'angular-cli',
-  //         files
-  //       },
-  //       { height: 500 }
-  //     );
-  //   });
-  // }
 }

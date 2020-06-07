@@ -21,19 +21,13 @@
     ],
     "paths": {
       "@chapichapi/ngx-mock-api": [
-        "./dist/chapichapi/ngx-mock-api"
+        "dist/chapichapi/ngx-mock-api",
+        "projects/chapichapi/ngx-mock-api/src/public-api.ts"
       ],
       "@chapichapi/ngx-loading": [
         "dist/chapichapi/ngx-loading/chapichapi-ngx-loading",
         "dist/chapichapi/ngx-loading",
-        "dist/chapichapi/ngx-loading/chapichapi-ngx-loading",
-        "dist/chapichapi/ngx-loading"
-      ],
-      "@chapichapi/ngx-card": [
-        "dist/chapichapi/ngx-card/chapichapi-ngx-card",
-        "dist/chapichapi/ngx-card",
-        "dist/chapichapi/ngx-card/chapichapi-ngx-card",
-        "dist/chapichapi/ngx-card"
+        "projects/chapichapi/ngx-loading/src/public-api.ts"
       ]
     }
   },
