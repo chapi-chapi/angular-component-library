@@ -48,3 +48,21 @@ body {
     background: linear-gradient(to right, #303030, $primary-color);
   }
 }
+
+.chapichapi-scroll {
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px $primary-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: lighten($accent-color, 25%);
+
+    &:hover {
+      background: $accent-color;
+    }
+  }
+}

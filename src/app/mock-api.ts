@@ -50,9 +50,9 @@ export const mockApi: IMockInterceptorData[] = [
     httpVerb: 'GET',
     data:
       {
-        directory: `assets/projects/chapichapi/${library.name}`,
+        directory: `assets/${library.name}`,
         fileNames: ['README.md',
-        // `src/lib/${library.name}.module.ts`,
+        // `${library.name}.module.ts`,
         // ...(library.hasInterceptor ? [`src/lib/interceptors/${library.name}.interceptor.ts`] : []),
         // ...(library.hasService ? [`src/lib/services/${library.name}.service.ts`] : []),
         // ...(library.componentNames ? library.componentNames.map(name => getComponentFileNames(name)).reduce((acc, i) => acc.concat(i)) : []),

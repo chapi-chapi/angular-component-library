@@ -32,17 +32,17 @@ export class LibraryDetailsComponent implements OnInit {
         this.files.push({fileName: fileNames[index], fileContents: responses[index]});
         filesObj[`src/modules/${fileNames[index]}`] = responses[index];
       }
-      sdk.embedProject(
-        'library-details-ide',
-        {
-          title: 'Card List',
-          description: 'test',
-          template: 'angular-cli',
-          files: filesObj
-        },
-        { height: 600, view: 'editor', hideNavigation: true,
-        openFile: `src/modules/${this.files.filter(x => x.fileName.toLowerCase().indexOf('module.ts') > -1)[0].fileName}` }
-      );
+      // sdk.embedProject(
+      //   'library-details-ide',
+      //   {
+      //     title: 'Card List',
+      //     description: 'test',
+      //     template: 'angular-cli',
+      //     files: filesObj
+      //   },
+      //   { height: 600, view: 'editor', hideNavigation: true,
+      //   openFile: `src/modules/${this.files.filter(x => x.fileName.toLowerCase().indexOf('module.ts') > -1)[0].fileName}` }
+      // );
     });
   }
 
