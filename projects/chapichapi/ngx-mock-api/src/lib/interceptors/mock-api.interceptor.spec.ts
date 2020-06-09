@@ -29,12 +29,16 @@ const mockApi: IMockInterceptorData[] = [
     httpVerb: "POST",
     augmentations: (requestData) => ({ ...requestData, createdAt: mockDate }),
     customResponse: (req, resp) =>
-      req.body.fieldA ? resp : ({ ...resp, body: null, status: 400 } as HttpResponse<any>),
+      req.body.fieldA
+        ? resp
+        : ({ ...resp, body: null, status: 400 } as HttpResponse<any>),
   },
 ];
 
 describe("MockApiInterceptor", () => {
-  beforeEach(() =>
+  let http: HttpClient;
+  let httpMock: HttpTestingController;
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, MockApiModule.forRoot(mockApi)],
       providers: [
@@ -44,34 +48,37 @@ describe("MockApiInterceptor", () => {
           multi: true,
         },
       ],
-    })
-  );
+    });
+    http = TestBed.inject(HttpClient);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
 
   describe("GET Requests", () => {
-    it("should add Mock Data", inject(
-      [HttpClient, HttpTestingController],
-      async (http: HttpClient, mock: HttpTestingController) => {
-        const response = await http.get(mockURL).toPromise();
-        expect(response).toBeTruthy();
-        expect(response).toEqual(mockData);
-        mock.verify();
-      }
-    ));
+    it("should add Mock Data", async () => {
+      const response = await http.get(mockURL).toPromise();
+      expect(response).toBeTruthy();
+      expect(response).toEqual(mockData);
+      httpMock.verify();
+    });
   });
 
   describe("POST Requests", async () => {
-    it("should generate the data from augmentations", inject(
-      [HttpClient, HttpTestingController],
-      async (http: HttpClient, mock: HttpTestingController) => {
-        const response = await http.post(mockURL, mockData).toPromise();
-        expect(response).toBeTruthy();
-        expect(response).toEqual({
-          ...mockData,
-          createdAt: mockDate,
-        });
-        mock.verify();
-      }
-    ));
+    it("should generate the data from augmentations", async () => {
+      const response = await http.post(mockURL, mockData).toPromise();
+      expect(response).toBeTruthy();
+      expect(response).toEqual({
+        ...mockData,
+        createdAt: mockDate,
+      });
+      httpMock.verify();
+    });
+
+    it("should return a custom response if condition is true", async () => {
+      const { fieldA, ...badRequestData } = mockData;
+      const response = await http.post(mockURL, badRequestData).toPromise();
+      expect(response).toBeFalsy();
+      httpMock.verify();
+    });
   });
 
   afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
