@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { LoadingService } from '../../services/loading.service';
 
 @Component({
@@ -8,10 +8,10 @@ import { LoadingService } from '../../services/loading.service';
   styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent implements OnInit {
-  public showLoader: Subject<boolean>;
+  public showLoader$: BehaviorSubject<boolean>;
 
   constructor(private loadingService: LoadingService) {
-    this.showLoader = this.loadingService.isLoading;
+    this.showLoader$ = this.loadingService.isLoading$;
    }
 
   ngOnInit(): void {

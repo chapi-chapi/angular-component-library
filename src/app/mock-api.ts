@@ -40,22 +40,23 @@ export const mockApi: IMockInterceptorData[] = [
     data: componentsToDisplay.map(library => ({
         name: library.name,
         subtitle: library.type,
-        description: library.description,
-        insertedUtc: new Date(),
-        updatedUtc: new Date(),
-      }))
+        description: library.description
+      })),
+    augmentations: (requestData) => (requestData.map(x => ({...x, insertedUtc: new Date(), updatedUtc: new Date()})))
   },
   ...componentsToDisplay.map(library => ({
     url: `/api/libraries/${library.name}`,
     httpVerb: 'GET',
     data:
       {
-        directory: `projects/chapichapi/${library.name}`,
-        fileNames: ['README.md', `src/lib/${library.name}.module.ts`,
-        ...(library.hasInterceptor ? [`src/lib/interceptors/${library.name}.interceptor.ts`] : []),
-        ...(library.hasService ? [`src/lib/services/${library.name}.service.ts`] : []),
-        ...(library.componentNames ? library.componentNames.map(name => getComponentFileNames(name)).reduce((acc, i) => acc.concat(i)) : []),
-        ...(library.fileNames ? library.fileNames : [])],
+        directory: `assets/${library.name}`,
+        fileNames: ['README.md',
+        // `${library.name}.module.ts`,
+        // ...(library.hasInterceptor ? [`src/lib/interceptors/${library.name}.interceptor.ts`] : []),
+        // ...(library.hasService ? [`src/lib/services/${library.name}.service.ts`] : []),
+        // ...(library.componentNames ? library.componentNames.map(name => getComponentFileNames(name)).reduce((acc, i) => acc.concat(i)) : []),
+        // ...(library.fileNames ? library.fileNames : [])
+      ],
       }
   }) as any)
 ];

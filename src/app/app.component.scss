@@ -1,7 +1,7 @@
 @import '../styles';
 
 #app-toolbar {
-  background: #228899;
+  background: $background-color;
   #app-title {
     font-size: 23px;
     letter-spacing: 2px;
@@ -57,7 +57,7 @@
 }
 
 #app-page-container {
-  height: calc(100vh - 95px);
+  min-height: calc(100vh - 64px);
 
   #app-main {
     padding: 5vh $default-spacing;

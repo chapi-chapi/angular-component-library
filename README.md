@@ -1,6 +1,10 @@
 # angular-component-library
 [![Build](https://github.com/chapi-chapi/angular-component-library/workflows/Build/badge.svg)](https://github.com/chapi-chapi/angular-component-library/actions?query=workflow%3ABuild)
 
+[![Live Site](https://img.shields.io/badge/Click%20Me-%20Open%20on%20GitHub%20Pages-green?style=for-the-badge&logo=github)](https://chapi-chapi.github.io/angular-component-library/)
+
+![Preview](./readme.gif)
+
 This project was scaffolded using [chapi-chapi/generator-angular](https://github.com/chapi-chapi/generator-angular)
 
 This is a component library for various angular packages.
@@ -11,44 +15,7 @@ To run locally use:
 
 This will run a build --watch against all projects and also serve the app in parallel.
 
-# Add a new library
-To add a new library run (from the root directory):
-`npm run libs:add library-name`
-
-This will add a new project within the chapichapi scope namespace inside the projects folder and with the ngx prefix:
-
-![Add lib](./screenshots/npm-add-lib.PNG)
-
-and then also tidy up the angular json by removing the `@chapichapi/` prefix from the projects key as this is invalid.
-
-![Add lib](./screenshots/npm-add-lib2.PNG)
-
-# Removing a library
-You can remove a library by running (from the root directory):
-`npm run libs:remove library-name`
-
-This deletes the library from the projects folder and then cleans up the reference to it in the angular.json file:
-
-![Remove lib](./screenshots/npm-remove-lib.PNG)
-
-# Packaging
-The point of this project is to build out a _normal_ angular application for displaying the components, whilst seperating each logical grouping into its own module/package.
-
-For example,
-`app/shared/interceptors/mock-api`
-Is a normal angular module folder but also includes its own package.json, public_api.ts and README.md.
-This can then easily be converted into an npm package via the ng-packagr scripts in the top-level package.json.
-
-Running:
-```npm run package:mock-api```
-Will generate a packaged version of the mock-api module.
-
-Once this is done, running:
-```npm run package:publish:mock-api```
-Will publish the package to the @chapichapi org in npm (assuming you have permissions).
-
-In future I will be looking to make the package/publish process more streamlined without filling up the top-level package.json with tons of scripts.
-
+Check out [the Wiki for more info](https://github.com/chapi-chapi/angular-component-library/wiki).
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 

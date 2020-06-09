@@ -3,43 +3,43 @@ This package provides a module that can be added to your angular module to inter
 
 Simply add the following references:
 
-```ts
+```typescript
 import { MockApiModule, IMockInterceptorData } from '@chapichapi/ngx-mock-api';
 ```
 
 Create your mock api:
 
-```ts
-const mockDate = new Date();
-const mockData = {
-  fieldA: "Fish",
-  fieldB: "Chips",
-};
-const mockURL = "/api/fishandchipsservice";
-const mockApi: IMockInterceptorData[] = [
+```typescript
+const mockApi : IMockInterceptorData[] = [
   {
-    url: mockURL,
+    url: '/api/contacts',
     httpVerb: "GET",
-    data: mockData,
-  },
-  {
-    url: mockURL,
-    httpVerb: "POST",
-    augmentations: (requestData) => ({...requestData, createdAt: mockDate})
+    data: [
+      {
+        firstName: 'John',
+        surname: 'Foooooo'
+      }
+    ]
   }
-];
+]
 ```
 
 And then add the MockApiModule to your module `imports`:
 
-```ts
+```typescript
 MockApiModule.forRoot(mockApi)
 ```
 
-You can also simulate an api response delay by passing in a second argument:
+You can also pass an flag in to enable the interceptor only for certain environments:
 
-```ts
-MockApiModule.forRoot(mockApi, 2000)
+```typescript
+MockApiModule.forRoot(mockApi, environment.mock)
+```
+
+You can also simulate an api response delay by passing in a third argument:
+
+```typescript
+MockApiModule.forRoot(mockApi, environment.mock, 2000)
 ```
 
 This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
