@@ -17,6 +17,7 @@ export class MockApiModule {
   /** Sets up an interceptor that mocks API requests based on the mockApi config passed in.
    * @param IMockInterceptorData[] mockApi A config that describes what calls to mock and what data to return.
    * @param boolean environmentFlag A flag that can be used to optionally turn the mock api interceptor on or off based on an environment flag.
+   * @param number simulatedDelay Can be used to simulate a delay on calling the API.
    * @returns ModuleWithProviders
    */
   static forRoot(mockApi: IMockInterceptorData[], environmentFlag: boolean = true, simulatedDelay = 0) : ModuleWithProviders {

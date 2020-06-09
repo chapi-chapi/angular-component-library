@@ -8,6 +8,7 @@ import { MockApiInterceptor } from "./mock-api.interceptor";
 import { MockApiModule } from "../mock-api.module";
 import { IMockInterceptorData } from "../models/IMockInterceptorData";
 
+const mockDate = new Date();
 const mockData = {
   fieldA: "Fish",
   fieldB: "Chips",
@@ -19,6 +20,11 @@ const mockApi: IMockInterceptorData[] = [
     httpVerb: "GET",
     data: mockData,
   },
+  {
+    url: mockURL,
+    httpVerb: "POST",
+    augmentations: (requestData) => ({...requestData, createdAt: mockDate})
+  }
 ];
 
 describe("MockApiInterceptor", () => {
@@ -35,13 +41,27 @@ describe("MockApiInterceptor", () => {
     })
   );
 
-  describe("intercept HTTP GET requests", () => {
-    it("should add Mock Data", inject(
+  describe("intercept HTTP requests", () => {
+    it("should add Mock Data for GET requests", inject(
       [HttpClient, HttpTestingController],
       (http: HttpClient, mock: HttpTestingController) => {
-        http.get("/api/fishandchipsservice").subscribe((response) => {
+        http.get(mockURL).subscribe((response) => {
           expect(response).toBeTruthy();
           expect(response).toEqual(mockData);
+        });
+        mock.verify();
+      }
+    ));
+
+    it("should generate the data from augmentations", inject(
+      [HttpClient, HttpTestingController],
+      (http: HttpClient, mock: HttpTestingController) => {
+        http.post(mockURL, mockData).subscribe((response) => {
+          expect(response).toBeTruthy();
+          expect(response).toEqual({
+            ...mockData,
+            createdAt: mockDate
+          });
         });
         mock.verify();
       }

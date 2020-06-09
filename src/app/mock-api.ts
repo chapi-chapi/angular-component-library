@@ -40,10 +40,9 @@ export const mockApi: IMockInterceptorData[] = [
     data: componentsToDisplay.map(library => ({
         name: library.name,
         subtitle: library.type,
-        description: library.description,
-        insertedUtc: new Date(),
-        updatedUtc: new Date(),
-      }))
+        description: library.description
+      })),
+    augmentations: (requestData) => (requestData.map(x => ({...x, insertedUtc: new Date(), updatedUtc: new Date()})))
   },
   ...componentsToDisplay.map(library => ({
     url: `/api/libraries/${library.name}`,

@@ -4,12 +4,15 @@ export interface IMockInterceptorData {
   /** The URL to target to mock ('/api/users' for example)
    */
   url: string;
-   /** The verb to target (GET, POST etc.)
+  /** The verb to target (GET, POST etc.)
    */
   httpVerb: IMockInterceptorHttpVerb;
   /** The data to return for the specified url and verb
    */
-  data: any;
+  data?: any;
+
+  /** Used to augment the object(s) returned from POST operations (such as generating an Id or timestamp). */
+  augmentations?: (requestData: any) => any;
 }
 
 export type IMockInterceptorHttpVerb = "GET" | "POST" | "PUT" | "PATCH";
