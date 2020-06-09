@@ -16,7 +16,7 @@ import { finalize } from 'rxjs/operators';
  */
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
-  constructor(public loadingService: LoadingService, @Inject("isActive") private isActive: boolean,) { }
+  constructor(public loadingService: LoadingService, @Inject("isActive") private isActive: boolean) { }
   intercept(request: HttpRequest<any>, handler: HttpHandler): Observable<HttpEvent<any>> {
     if(this.isActive) {
       this.loadingService.show();

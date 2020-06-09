@@ -45,11 +45,14 @@ describe("LoadingInterceptor", () => {
     spyOn(service, "show").and.callFake(() => spyCalls.push("show"));
     spyOn(service, "hide").and.callFake(() => spyCalls.push("hide"));
     const response = await http.get(mockURL).toPromise();
-    expect(response).toBeTruthy();
 
     // Ensure the functions are called and in the right order
-    expect(spyCalls.length).toBe(2);
+    expect(spyCalls.length).toBe(2, `Unexpected number of spy calls`);
     expect(spyCalls[0]).toBe("show");
     expect(spyCalls[1]).toBe("hide");
+
+    // Ensure that the expected data is also returned
+    expect(response).toBeTruthy();
+    expect(response).toEqual(mockData);
   });
 });
