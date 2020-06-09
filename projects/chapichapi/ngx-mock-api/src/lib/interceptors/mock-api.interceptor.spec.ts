@@ -3,7 +3,11 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from "@angular/common/http/testing";
-import { HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpResponse,
+} from "@angular/common/http";
 import { MockApiInterceptor } from "./mock-api.interceptor";
 import { MockApiModule } from "../mock-api.module";
 import { IMockInterceptorData } from "../models/IMockInterceptorData";
@@ -23,8 +27,10 @@ const mockApi: IMockInterceptorData[] = [
   {
     url: mockURL,
     httpVerb: "POST",
-    augmentations: (requestData) => ({...requestData, createdAt: mockDate})
-  }
+    augmentations: (requestData) => ({ ...requestData, createdAt: mockDate }),
+    customResponse: (req, resp) =>
+      req.body.fieldA ? resp : ({ ...resp, body: null, status: 400 } as HttpResponse<any>),
+  },
 ];
 
 describe("MockApiInterceptor", () => {
@@ -41,27 +47,27 @@ describe("MockApiInterceptor", () => {
     })
   );
 
-  describe("intercept HTTP requests", () => {
-    it("should add Mock Data for GET requests", inject(
+  describe("GET Requests", () => {
+    it("should add Mock Data", inject(
       [HttpClient, HttpTestingController],
-      (http: HttpClient, mock: HttpTestingController) => {
-        http.get(mockURL).subscribe((response) => {
-          expect(response).toBeTruthy();
-          expect(response).toEqual(mockData);
-        });
+      async (http: HttpClient, mock: HttpTestingController) => {
+        const response = await http.get(mockURL).toPromise();
+        expect(response).toBeTruthy();
+        expect(response).toEqual(mockData);
         mock.verify();
       }
     ));
+  });
 
+  describe("POST Requests", async () => {
     it("should generate the data from augmentations", inject(
       [HttpClient, HttpTestingController],
-      (http: HttpClient, mock: HttpTestingController) => {
-        http.post(mockURL, mockData).subscribe((response) => {
-          expect(response).toBeTruthy();
-          expect(response).toEqual({
-            ...mockData,
-            createdAt: mockDate
-          });
+      async (http: HttpClient, mock: HttpTestingController) => {
+        const response = await http.post(mockURL, mockData).toPromise();
+        expect(response).toBeTruthy();
+        expect(response).toEqual({
+          ...mockData,
+          createdAt: mockDate,
         });
         mock.verify();
       }

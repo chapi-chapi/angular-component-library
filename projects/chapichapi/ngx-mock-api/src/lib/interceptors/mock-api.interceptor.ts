@@ -16,8 +16,7 @@ import { delay } from "rxjs/operators";
 export class MockApiInterceptor implements HttpInterceptor {
   constructor(
     @Inject("mockApiData") private mockApiData: IMockInterceptorData[],
-    @Inject("isActive") private isActive: boolean,
-    @Inject("delay") private delay: number,
+    @Inject("delay") private delay: number
   ) {}
 
   intercept(
@@ -30,14 +29,19 @@ export class MockApiInterceptor implements HttpInterceptor {
       );
       if (mockApiUrl) {
         if (mockApiUrl.augmentations) {
-          mockApiUrl.data = mockApiUrl.augmentations(request.body ?? mockApiUrl.data);
+          mockApiUrl.data = mockApiUrl.augmentations(
+            request.body ?? mockApiUrl.data
+          );
         }
+        const response = new HttpResponse({
+          status: 200,
+          body: mockApiUrl.data,
+        });
 
         return of(
-          new HttpResponse({
-            status: 200,
-            body: mockApiUrl.data,
-          })
+          mockApiUrl.customResponse
+            ? mockApiUrl.customResponse(request, response)
+            : response
         ).pipe(delay(this.delay));
       }
     }

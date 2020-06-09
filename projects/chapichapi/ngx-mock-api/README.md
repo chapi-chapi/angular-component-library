@@ -4,24 +4,30 @@ This package provides a module that can be added to your angular module to inter
 Simply add the following references:
 
 ```ts
-import { MockApiModule, IMockInterceptorData } from '@chapichapi/ngx.mock-api';
+import { MockApiModule, IMockInterceptorData } from '@chapichapi/ngx-mock-api';
 ```
 
 Create your mock api:
 
 ```ts
-const mockApi : IMockInterceptorData[] = [
+const mockDate = new Date();
+const mockData = {
+  fieldA: "Fish",
+  fieldB: "Chips",
+};
+const mockURL = "/api/fishandchipsservice";
+const mockApi: IMockInterceptorData[] = [
   {
-    url: '/api/contacts',
+    url: mockURL,
     httpVerb: "GET",
-    data: [
-      {
-        firstName: 'John',
-        surname: 'Foooooo'
-      }
-    ]
+    data: mockData,
+  },
+  {
+    url: mockURL,
+    httpVerb: "POST",
+    augmentations: (requestData) => ({...requestData, createdAt: mockDate})
   }
-]
+];
 ```
 
 And then add the MockApiModule to your module `imports`:
@@ -30,16 +36,10 @@ And then add the MockApiModule to your module `imports`:
 MockApiModule.forRoot(mockApi)
 ```
 
-You can also pass an flag in to enable the interceptor only for certain environments:
+You can also simulate an api response delay by passing in a second argument:
 
 ```ts
-MockApiModule.forRoot(mockApi, environment.mock)
-```
-
-You can also simulate an api response delay by passing in a third argument:
-
-```ts
-MockApiModule.forRoot(mockApi, environment.mock, 2000)
+MockApiModule.forRoot(mockApi, 2000)
 ```
 
 This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
