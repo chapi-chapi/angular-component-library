@@ -1,4 +1,4 @@
-<div *ngIf="showLoader | async" class="overlay">
+<div *ngIf="showLoader$ | async" class="chapichapi-loader-overlay">
   <mat-progress-spinner class="spinner" [color]="'primary'" [mode]="'indeterminate'" [value]="50">
   </mat-progress-spinner>
 </div>
