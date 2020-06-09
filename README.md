@@ -3,6 +3,8 @@
 
 [![Live Site](https://img.shields.io/badge/Click%20Me-%20Open%20on%20GitHub%20Pages-green?style=for-the-badge&logo=github)](https://chapi-chapi.github.io/angular-component-library/)
 
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/chapi-chapi/angular-component-library)
+
 ![Preview](./readme.gif)
 
 This project was scaffolded using [chapi-chapi/generator-angular](https://github.com/chapi-chapi/generator-angular)
