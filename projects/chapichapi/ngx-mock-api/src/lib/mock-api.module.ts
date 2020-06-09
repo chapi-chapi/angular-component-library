@@ -19,7 +19,7 @@ export class MockApiModule {
    * @param number simulatedDelay Can be used to simulate a delay on calling the API.
    * @returns ModuleWithProviders
    */
-  static forRoot(mockApi: IMockInterceptorData[], environmentFlag: boolean = true, simulatedDelay = 0) : ModuleWithProviders {
+  static forRoot(mockApi: IMockInterceptorData[], simulatedDelay = 0) : ModuleWithProviders {
     return {
       ngModule: MockApiModule,
       providers: [

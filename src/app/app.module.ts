@@ -73,7 +73,7 @@ import { LoadingModule } from '@chapichapi/ngx-loading';
     TimeagoModule.forRoot(),
     ChapiChapiCardModule,
     LoadingModule.forRoot(),
-    MockApiModule.forRoot(mockApi, environment.mock, 1000)
+    MockApiModule.forRoot(environment.mock ? mockApi : null, 1000)
   ],
   providers: [
     NotificationsService,

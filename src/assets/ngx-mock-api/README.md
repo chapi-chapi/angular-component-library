@@ -4,7 +4,7 @@ This package provides a module that can be added to your angular module to inter
 Simply add the following references:
 
 ```typescript
-import { MockApiModule, IMockInterceptorData } from '@chapichapi/ngx.mock-api';
+import { MockApiModule, IMockInterceptorData } from '@chapichapi/ngx-mock-api';
 ```
 
 Create your mock api:

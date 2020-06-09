@@ -1,4 +1,4 @@
-import { TestBed, inject } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 import {
   HttpClientTestingModule,
   HttpTestingController,
@@ -58,7 +58,6 @@ describe("MockApiInterceptor", () => {
       const response = await http.get(mockURL).toPromise();
       expect(response).toBeTruthy();
       expect(response).toEqual(mockData);
-      httpMock.verify();
     });
   });
 
@@ -70,18 +69,16 @@ describe("MockApiInterceptor", () => {
         ...mockData,
         createdAt: mockDate,
       });
-      httpMock.verify();
     });
 
     it("should return a custom response if condition is true", async () => {
       const { fieldA, ...badRequestData } = mockData;
       const response = await http.post(mockURL, badRequestData).toPromise();
       expect(response).toBeFalsy();
-      httpMock.verify();
     });
   });
 
-  afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
-    mock.verify();
-  }));
+  afterEach(() => {
+    httpMock.verify();
+  });
 });
